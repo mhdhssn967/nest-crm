@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig"; // Import Firebase Auth
 import { useNavigate } from "react-router-dom"; // If using React Router
@@ -23,6 +23,16 @@ const Login = () => {
       setError("Invalid email or password");
     }
   };
+
+   useEffect(() => {
+  const unsubscribe = auth.onAuthStateChanged((user) => {
+    if (user) {
+      navigate("/");
+    }
+  });
+
+  return () => unsubscribe(); // cleanup
+}, [navigate]);
 
   return (
     <Container className="loginContainer">

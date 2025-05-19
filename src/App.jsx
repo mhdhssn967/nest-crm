@@ -1,16 +1,22 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
-import Home from "./pages/HomePage"; // Your homepage
-
+import HomePage from "./pages/HomePage"; // Your homepage
+import ProtectedRoute from "./components/ProtectedRoute";
 function App() {
   return (
     <>
-    <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </Router>
+     <Routes>
+      <Route path="/login" element={<Login />} />
+
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
     </>
   );
 }
