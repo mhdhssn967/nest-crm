@@ -1,0 +1,113 @@
+.viewRecord{
+    background-color: white;
+    padding: 2%;
+    width: 1000px;
+    border-radius: 10px;
+    max-height: 85vh;
+
+    position: fixed; /* Keeps it in place even when scrolling */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centers it exactly */
+    
+    /* Display and Layering */
+    display: flex;
+    flex-direction: column;
+    z-index: 1; /* Ensures it's above other elements */
+    /* box-shadow: 0px 4px 100px rgba(0, 0, 0, 1); */
+
+    z-index: 2;
+    animation: openUp .5s;
+}
+@keyframes openUp {
+    0%{
+        transform: scale(0) translate(-50%, -50%) skew(50deg, -50deg);
+    }100%{
+        transform: scale(1) translate(-50%, -50%) ;
+    }
+    
+}
+.viewRecord .det{
+    display: flex;
+    justify-content:space-between;
+    margin: 0.1%;
+    /* border-bottom: solid 0.5px rgb(124, 124, 124); */
+    /* background-color: var(--secondary-color); */
+    /* border-radius: 55px; */
+    padding: 2%;
+}
+.viewRecord .det:hover{
+    background-color: antiquewhite;
+}
+
+@media screen and (max-width: 768px) {
+    .viewRecord .det {
+        flex-direction: column;
+        align-items: flex-start; /* Align items to start for a stacked look */
+    }
+    .viewRecord{
+        width: 90%;
+    }
+    .viewRecord div h2{
+        margin-right: 0.3%;
+        font-size: 8px;
+    }
+    .viewRecord div span{
+        font-size: 8px;
+    }
+    .viewRecord div span a{
+        font-size: 8px;
+    }
+}
+
+.head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1%;
+}
+.head img{
+    cursor: pointer;
+}
+.head img:hover{
+    transform: scale(1.1);
+}
+
+.viewRecord table tbody td a{
+    text-decoration: none;
+    color: black;
+}
+.viewRecord table tbody td, .viewRecord table tbody td strong{
+    font-size: 18px;
+    padding-bottom: 10px;
+}
+.viewRecord table tbody td{
+    border-bottom: solid 0.5px rgba(51, 50, 49,0.3);
+    padding:10px 0px;
+}
+
+.btn-div{
+    display:'flex';
+    justify-content: left;
+}
+.btn-div button{
+    margin: 1%;
+}
+.viewRecord input,select,textArea{
+    background-color: rgb(228, 228, 228);
+    border: none;
+    border-radius: 1px;
+    white-space: nowrap;
+}
+.view-record-overlay{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    background-color: rgba(51, 50, 49,0.8);
+    z-index: 5;
+}
+
+.viewRecord .head h1{
+    font-size: 30px;
+}

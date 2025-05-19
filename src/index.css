@@ -1,0 +1,16 @@
+* {
+  font-family: "Manrope", sans-serif;
+  margin: 0px;
+  font-size: 15px;
+}
+
+:root {
+  --primary-color: #e0e0e0;
+  --secondary-color: rgb(159, 198, 243);
+  --accent-color: #36628b;
+  --backgorund-color: rgb(236, 244, 248);
+  --warning-color: rgb(240, 67, 67);
+}
+body{
+  background-color: var(--backgorund-color);
+}

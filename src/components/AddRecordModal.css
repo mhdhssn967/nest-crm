@@ -1,0 +1,31 @@
+.custom-modal{
+    width: 500px;
+    max-width: 90vw;
+    height: 95vh;
+    overflow: scroll;
+}
+.custom-modal::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide arrows in input type=number for Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+.fa-file-circle-plus{
+  font-size: 30px;
+  transition: 0.2s;
+}
+.fa-file-circle-plus:hover{
+  transform: scale(1.2);
+  color: rgb(57, 57, 58);
+}
+.fa-file-circle-plus:active{
+  color: black;
+  transform: scale(0.7);
+}

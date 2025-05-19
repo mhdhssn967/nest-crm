@@ -1,0 +1,41 @@
+.notificationMessage{
+    background-color: rgb(60, 60, 90);
+    padding: 2%;
+    margin: 0% -4%;
+}
+.notificationMessage2{
+    padding: 2%;
+    margin: 0% -4%;
+
+}
+.notificationPanel{
+    width: 95%;
+    display: flex;
+    justify-content: right;
+    position: absolute;
+}
+.notificationPanel button{
+    background: none;
+    border: none;
+    width: 100px;
+    justify-self: right;
+    height: 50px;
+}
+.notificationPanel button i{
+    font-size: 30px;
+}
+.notificationPanel button:hover{
+    
+    animation: rotNot 0.5s infinite;
+}
+@keyframes rotNot {
+    0%{
+        transform: rotate(30deg) scale(1.2);
+    }
+    50%{
+        transform: rotate(-30deg);
+    }
+    100%{
+        transform: rotate(30deg) scale(1.2);
+    }
+}

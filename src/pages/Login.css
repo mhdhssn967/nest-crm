@@ -1,0 +1,11 @@
+.loginDiv{
+    width: 500px;
+    padding: 2%;
+    border-radius: 10px;
+}
+.loginContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}

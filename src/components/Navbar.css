@@ -1,0 +1,32 @@
+.nav{
+   padding: 1%;
+   display: flex;
+   background-color: var(--secondary-color);
+   align-items: center;
+   justify-content: space-between;
+   width: 100%;
+}
+.nav img{
+   margin: 0% 0.5% 0% 1%;
+   filter: invert(1);
+}
+.nav h1{
+   font-weight: 400;
+   font-size: 25px;
+}
+.logout-btn{
+    margin-left: 5%;
+    background-color: aliceblue;
+    border-radius: 5px;
+    padding: 2%;
+    border: solid 0.5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.1s;
+}
+.logout-btn:hover{
+    transform: scale(1.1);
+}
+.logout-btn:active{
+    transform: scale(0.9);
+}

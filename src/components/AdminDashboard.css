@@ -1,0 +1,17 @@
+.dashMain{
+    margin-right: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dashContainer{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 90vw;
+}
+.dashMain p{
+    background-color: rgb(27, 79, 138);
+    align-self: center;
+    padding: 10px 10px;
+    border-radius: 5px;
+}
