@@ -87,6 +87,9 @@
     background-color: rgba(51, 50, 49,0.8);
     z-index: 5;
 }
+.mobile-view{
+    display: none;
+}
 
 .viewRecord .head h1{
     font-size: 30px;
@@ -100,7 +103,9 @@
         align-items: flex-start; /* Align items to start for a stacked look */
     }
     .viewRecord{
-        width: 90%;
+        width: 80vw;
+        justify-content: center;
+        display: flex;
     }
     .viewRecord div h2{
         margin-right: 0.3%;
@@ -117,5 +122,11 @@
     }
     .viewRecord i{
         font-size: 10px;
+    }
+    .pc-view{
+        display: none;
+    }
+    .mobile-view{
+        display: block;
     }
 }
