@@ -104,6 +104,8 @@
     }
     .viewRecord{
         width: 80vw;
+        height: fit-content;
+        padding: 30px !important;
         justify-content: center;
         display: flex;
     }
