@@ -104,10 +104,9 @@
     }
     .viewRecord{
         width: 80vw;
-        height: fit-content;
-        padding: 30px !important;
         justify-content: center;
         display: flex;
+        overflow-y: scroll;
     }
     .viewRecord div h2{
         margin-right: 0.3%;
