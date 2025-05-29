@@ -45,12 +45,12 @@ export const fetchCRMRecords = async (companyId, userId) => {
 
 
 
-export const getUserCompanyDetails = async (userUid) => {
+export const getUserCompanyDetails = async (userid) => {
   try {
     // Query the 'allemployees' collection directly
     const q = query(
       collection(db, 'allEmployees'),
-      where('uid', '==', userUid)
+      where('uid', '==', userid)
     );
 
     const querySnapshot = await getDocs(q);

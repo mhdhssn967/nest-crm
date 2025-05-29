@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './Homepage.css';
 import RecordsTable from '../components/RecordsTable';
 import AddRecordModal from '../components/AddRecordModal';
-import getBDAName, { fetchAdminName, getCurrentUser, getEmployeeName } from '../services/fetchNames';
+import  { fetchAdminName, getCurrentUser, getEmployeeName } from '../services/fetchNames';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import AdminDashboard from '../components/AdminDashboard';
 import { auth } from '../firebaseConfig';
@@ -20,6 +20,7 @@ const HomePage = () => {
   const [currentUser, setCurrentUser] = useState('')
   const [employeeName, setEmployeeName] = useState('')
   const [allEmployees, setAllmployees] = useState([])
+  const [admin,setAdmin]=useState(false)
   console.log(allEmployees);
   
 
@@ -33,14 +34,14 @@ useEffect(() => {
       try {
         // Try to fetch admin name first
         const adminName = await fetchAdminName(user.uid);
-
+        
         if (adminName) {
           setUserName(adminName);
           setAdmin(true); // Optional: mark user as admin
         } else {
-          // Not an admin, fallback to BDA
-          const userName = await getBDAName(user.uid);
-          setUserName(userName || "BD Associate");
+          // Not an admin, fallback to BDA          
+          const userName = await getUserCompanyDetails(user.uid);
+          setUserName(userName.companyName || "BD Associate");
           setAdmin(false); // Optional
         }
 
@@ -97,7 +98,7 @@ useEffect(()=>{
 
   return (
     <>
-    <Nav/>
+    <Nav employeeName={employeeName}/>
       <div style={{ display: 'flex', alignItems: 'center' }}><h1 className='homeTitle'> {userName}</h1><AddRecordModal triggerRefresh={triggerRefresh} setTriggerRefresh={setTriggerRefresh} companyId={companyId} employeeName={employeeName} /></div>
       <div style={{ display: 'flex', justifyContent: 'left', alignItems: 'start' }}>
         {/* <button style={{ margin: '1%' }} className='btn btn-secondary'>View Associates</button> */}

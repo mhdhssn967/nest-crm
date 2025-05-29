@@ -158,38 +158,40 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
 
 <div className='tableSelect'>
           {/* Search Bar */}
-          <div className="input-group " style={{ minWidth: '200px', maxWidth: '400px' }}>
-            <span className="input-group-text">
-              <i className="fa-solid fa-magnifying-glass"></i>
-            </span>
-            <input onChange={(e) => searchFilter(e.target.value)} type="text" className="form-control" placeholder="Search records" />
+          <div className='filter-main'>
+            <div className="input-group " style={{ minWidth: '200px', maxWidth: '400px' }}>
+              <span className="input-group-text">
+                <i className="fa-solid fa-magnifying-glass"></i>
+              </span>
+              <input onChange={(e) => searchFilter(e.target.value)} type="text" className="form-control" placeholder="Search records" />
+            </div>
+            <div className='filters'>
+              {/* Associate Filter */}
+              <label htmlFor="associateSelect" style={{textWrap:'nowrap',marginLeft:'50px'}}>Filter Associate</label>
+              <select name="" id="associateSelect" onChange={(e) => setEmployeeFilter(e.target.value)}>
+                <option disabled>Select Associate</option>
+                <option value={'all'}>All</option>
+  
+                {allEmployees.length > 0 &&
+                  allEmployees.map((employee) =>
+                    <option value={employee.uid} key={employee.uid}>
+                      {employee.empName}
+                    </option>
+                  )}
+              </select>
+  
+              {/* Common filter */}
+              {/* <select name="" id="">
+                <option disabled >Select Filter</option>
+              </select> */}
+  
+              {/* Sort By */}
+              {/* <select name="" id="">
+                <option disabled >Sort By</option>
+              </select> */}
+            </div>
           </div>
-          <div className='filters'>
-            {/* Associate Filter */}
-            <label htmlFor="associateSelect" style={{textWrap:'nowrap',marginLeft:'50px'}}>Filter Associate</label>
-            <select name="" id="associateSelect" onChange={(e) => setEmployeeFilter(e.target.value)}>
-              <option disabled>Select Associate</option>
-              <option value={'all'}>All</option>
-
-              {allEmployees.length > 0 &&
-                allEmployees.map((employee) =>
-                  <option value={employee.uid} key={employee.uid}>
-                    {employee.empName}
-                  </option>
-                )}
-            </select>
-
-            {/* Common filter */}
-            <select name="" id="">
-              <option disabled >Select Filter</option>
-            </select>
-
-            {/* Sort By */}
-            <select name="" id="">
-              <option disabled >Sort By</option>
-            </select>
           </div>
-        </div>
       <div className='tableMain'>
 
         <table className="recordsTable">
@@ -197,21 +199,21 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
             <tr>
               <th>#</th>
               <th>Client</th>
-              <th>Place</th>
+              <th id='hide-mobile'>Place</th>
               {/* <th>Country</th> */}
-              <th>Person of Contact</th>
+              <th id='hide-mobile'>Person of Contact</th>
               {/* <th>POC Designation</th> */}
-              <th>Contact No</th>
+              <th id='hide-mobile'>Contact No</th>
               {/* <th>Second contact person</th> */}
               {/* <th>Second contact person number</th> */}
               {/* <th>Referral Person</th> */}
               {/* <th>Email</th> */}
-              <th>Associate</th>
+              <th id='hide-mobile'>Associate</th>
               <th>Status</th>
               {/* <th>First quoted Price</th> */}
               {/* <th>Final Agreed price</th> */}
               {/* <th>Last Contacted</th> */}
-              <th>Next Follow Up</th>
+              <th id='hide-mobile'>Next Follow Up</th>
               {/* <th>Remarks</th> */}
             </tr>
           </thead>
@@ -225,19 +227,19 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
                   <td >
                     {highlightText(record.clientName, searchText)}
                   </td>
-                  <td >
+                  <td id='hide-mobile'>
                     {highlightText(record.place, searchText)}
                   </td>
                   {/* <td >
   {record.country}
 </td> */}
-                  <td >
+                  <td id='hide-mobile'>
                     {highlightText(record.personOfContact, searchText)}
                   </td>
                   {/* <td >
   {record.pocDesignation}
 </td> */}
-                  <td >
+                  <td id='hide-mobile'>
                     {highlightText(record.contactNo, searchText)}
                   </td>
                   {/* <td >
@@ -252,7 +254,7 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
                   {/* <td >
                     {highlightText(record.email, searchText)}
                   </td> */}
-                  <td >
+                  <td id='hide-mobile'>
                     {highlightText(record.employeeName, searchText)}
                   </td>
                   <td>
@@ -268,7 +270,7 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
                   {/* <td >
   {record.lastContacted}
 </td> */}
-                  <td style={record.nextFollowUp <= formattedDate && record.nextFollowUp !== null ? { backgroundColor: '' } : { backgroundColor: 'var(--warning-color)' }}>
+                  <td id='hide-mobile' style={record.nextFollowUp <= formattedDate && record.nextFollowUp !== null ? { backgroundColor: '' } : { backgroundColor: 'var(--warning-color)' }}>
                     {highlightText(record.nextFollowUp, searchText)}
                   </td>
                   {/* <td id='remarkTD' >
