@@ -145,6 +145,12 @@
     .view-mobile .btn-div{
         justify-content: center;
         display: flex;
-
     }
+    .view-mobile input,.view-mobile select{
+        width: 130px;
+    }
+    .view-mobile textarea{
+        width: 130px !important;
+    }
+    
 }
