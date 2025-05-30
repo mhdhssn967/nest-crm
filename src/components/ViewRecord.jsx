@@ -30,7 +30,7 @@ const ViewRecord = ({
       "Are you sure you want to delete this record?"
     );
     if (confirmDelete) {
-      await deleteRecord(data);
+      await deleteRecord(data,companyId);
       setViewRecord(false);
       setUpdateTable(!updateTable);
     }

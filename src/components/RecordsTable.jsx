@@ -64,7 +64,7 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
   };
 
   fetchCRMData();
-}, [currentUser, companyId,triggerRefresh] );
+}, [currentUser, companyId,triggerRefresh,updateTable] );
 
 
 
