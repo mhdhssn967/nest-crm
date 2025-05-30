@@ -154,7 +154,7 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
   return (
     <div>
       {
-        viewRecord == true && <ViewRecord setViewRecord={setViewRecord} viewRecordData={viewRecordData} setUpdateTable={setUpdateTable} updateTable={updateTable} />}
+        viewRecord == true && <ViewRecord setViewRecord={setViewRecord} viewRecordData={viewRecordData} setUpdateTable={setUpdateTable} updateTable={updateTable} companyId={companyId}/>}
 
 <div className='tableSelect'>
           {/* Search Bar */}

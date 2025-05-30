@@ -7,9 +7,9 @@ import { doc, updateDoc } from "firebase/firestore";
  * @param {Object} updatedData - The new data to update in the record.
  * @returns {Promise<void>} A promise that resolves when the update is successful.
  */
-const updateRecord = async (id, updatedData) => {
+const updateRecord = async (id, updatedData, compamyId) => {
   try {
-    const recordRef = doc(db, "records", id); // Reference to the document
+    const recordRef = doc(db, "userData", compamyId,"CRMdata",id); // Reference to the document
     await updateDoc(recordRef, updatedData); // Update the document in Firestore
     console.log("Record updated successfully!");
   } catch (error) {
