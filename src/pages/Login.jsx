@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Form, Button, Container, Alert, Spinner } from "react-bootstrap";
 import login from '../assets/OQ.png';
 import './Login.css';
+import loadingGif from  '../assets/loadingto.gif'
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -40,11 +41,11 @@ const Login = () => {
   // Loading screen while checking auth
   if (loading) {
     return (
-      <Container className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </Container>
+      <>
+      <div style={{width:'100vw',height:'100vh',backgroundColor:'#2f2e34',display:'flex',justifyContent:'center',alignItems:'center'}}>
+        <img src={loadingGif} width={'600xp'} alt="" />
+      </div>
+      </>
     );
   }
 
