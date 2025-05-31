@@ -1,16 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebaseConfig"; // Import Firebase Auth
-import { useNavigate } from "react-router-dom"; // If using React Router
-import { Form, Button, Container, Alert } from "react-bootstrap"; // Bootstrap
-import login from '../assets/OQ.png'
-import './Login.css'
+import { auth } from "../firebaseConfig";
+import { useNavigate } from "react-router-dom";
+import { Form, Button, Container, Alert, Spinner } from "react-bootstrap";
+import login from '../assets/OQ.png';
+import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true); // Add loading state
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigate("/");
+      } else {
+        setLoading(false); // Only show login form if not logged in
+      }
+    });
+
+    return () => unsubscribe();
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -18,27 +31,30 @@ const Login = () => {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/"); // Redirect to homepage after login
+      navigate("/");
     } catch (err) {
       setError("Invalid email or password");
     }
   };
 
-   useEffect(() => {
-  const unsubscribe = auth.onAuthStateChanged((user) => {
-    if (user) {
-      navigate("/");
-    }
-  });
-
-  return () => unsubscribe(); // cleanup
-}, [navigate]);
+  // Loading screen while checking auth
+  if (loading) {
+    return (
+      <Container className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </Container>
+    );
+  }
 
   return (
     <Container className="loginContainer">
-      <div className="loginDiv" style={{boxShadow:'0px 0px 5px var(--secondary-color)'}}>
+      <div className="loginDiv" style={{ boxShadow: '0px 0px 5px var(--secondary-color)' }}>
         <div className="d-flex align-items-center justify-content-center flex-column">
-         <img className="m-3" src={login} alt="" width={'70px'} style={{filter:'invert(1)'}}/>   <h1 style={{fontWeight:'100'}}>Oqulix CRM</h1></div>
+          <img className="m-3" src={login} alt="" width={'70px'} style={{ filter: 'invert(1)' }} />
+          <h1 style={{ fontWeight: '100' }}>Oqulix CRM</h1>
+        </div>
 
         <h2 className="text-center">Login</h2>
         {error && <Alert variant="danger">{error}</Alert>}
