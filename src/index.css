@@ -7,8 +7,8 @@
 :root {
   --primary-color: #e0e0e0;
   --secondary-color: rgb(159, 198, 243);
-  --accent-color: #36628b;
-  --backgorund-color: rgb(236, 244, 248);
+  --accent-color: #a9daff;
+  --backgorund-color: rgb(255, 255, 255);
   --warning-color: rgb(240, 67, 67);
 }
 body{

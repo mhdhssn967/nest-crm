@@ -168,7 +168,7 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
             <div className='filters'>
               {/* Associate Filter */}
               <label htmlFor="associateSelect" style={{textWrap:'nowrap',marginLeft:'50px'}}>Filter Associate</label>
-              <select name="" id="associateSelect" onChange={(e) => setEmployeeFilter(e.target.value)}>
+              <select style={{color:'black'}} name="" id="associateSelect" onChange={(e) => setEmployeeFilter(e.target.value)}>
                 <option disabled>Select Associate</option>
                 <option value={'all'}>All</option>
   
@@ -257,8 +257,8 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
                   <td id='hide-mobile'>
                     {highlightText(record.employeeName, searchText)}
                   </td>
-                  <td>
-  <p style={{ backgroundColor: getStatusColor(record.currentStatus) ,padding:'3%',borderRadius:'40px',textWrap:'nowrap'}}>{highlightText(record.currentStatus, searchText)}</p>
+                  <td style={{display:'flex',justifyContent:'center',alignItems:'center',paddingTop:'20px'}}>
+  <p style={{ backgroundColor: getStatusColor(record.currentStatus) ,padding:'5px 10px',borderRadius:'40px',textWrap:'nowrap',width:'fit-content'}}>{highlightText(record.currentStatus, searchText)}</p>
 </td>
 
                   {/* <td >

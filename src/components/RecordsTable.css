@@ -1,28 +1,44 @@
 .recordsTable tbody tr{
     cursor: pointer;
     transition: 0.1s;
-    background-color: rgb(248, 248, 248);
-    border-bottom: solid 0.5px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 1px 3px rgba(150, 149, 149, 0.5);
     height: 60px;
-
+    border-collapse: separate;
+    border-spacing: 20px 10px; 
 }
 .recordsTable{
     width: 98%;
     margin: 0.5% 2%;
     justify-self: center;
     text-align: center;
+    border-collapse: separate;
+    border-spacing: 0 10px;
 }
 .recordsTable tbody tr:hover{
-    /* transform: scale(1.03); */
-    /* transition: 0.1s; */
-    background-color: rgb(179, 213, 243);
+        box-shadow: 0px 4px 8px rgba(150, 149, 149, 0.5);
+        transform: scale(1.01);
 }
+
 .recordsTable thead tr th{
     padding: 1%;
+    background: none;
+    color: rgb(46, 46, 46);
+    background-color: var(--accent-color);
+
+}
+.recordsTable thead tr{
+  box-sizing: border-box;
+  border-radius: 20px;
+}
+.recordsTable thead tr :first-child{
+    border-radius: 30px 0px 0px 30px;
+}
+.recordsTable thead tr :last-child{
+    border-radius: 0px 30px 30px 0px;
 }
 .recordsTable thead{
     position: sticky;
-    background-color: var(--accent-color);
     z-index: 1;
     color: white;
     top: 0%;
@@ -35,7 +51,7 @@
 }
 .recordsTable tbody tr td{
     color: black;
-    padding: 1%;
+    padding: 1px;
 }
 .loadingDiv img{
     filter: invert(1);
@@ -88,7 +104,7 @@
 .input-group-text{
     border: solid 0.5px black;
     background-color: var(--accent-color);
-    color: white;
+    color: rgb(29, 28, 28);
 }
 .filter-main{
     display: flex;
@@ -120,5 +136,11 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+.recordsTable thead tr :nth-child(7){
+    border-radius: 0px 30px 30px 0px;
+}
+.recordsTable tbody tr:hover{
+    background-color: rgb(211, 232, 250);
 }
   }
