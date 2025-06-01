@@ -17,9 +17,9 @@
 }
 .logout-btn{
     /* margin-left: 5%; */
-    background-color: aliceblue;
+    background: none;
     border-radius: 5px;
-    border: solid 0.5px;
+    border: none;
     cursor: pointer;
     font-weight: 600;
     transition: 0.1s;
@@ -33,7 +33,7 @@
 .nav-right{
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 30px;
 }
 .nav-right p{
     font-size: 20px;

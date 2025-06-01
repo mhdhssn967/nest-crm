@@ -159,15 +159,15 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
 <div className='tableSelect'>
           {/* Search Bar */}
           <div className='filter-main'>
-            <div className="input-group " style={{ minWidth: '200px', maxWidth: '400px' }}>
+            <div className="input-group" >
               <span className="input-group-text">
                 <i className="fa-solid fa-magnifying-glass"></i>
               </span>
-              <input onChange={(e) => searchFilter(e.target.value)} type="text" className="form-control" placeholder="Search records" />
+              <input onChange={(e) => searchFilter(e.target.value)} type="text" className="search-box" placeholder="Search records" />
             </div>
             <div className='filters'>
               {/* Associate Filter */}
-              <label htmlFor="associateSelect" style={{textWrap:'nowrap',marginLeft:'50px'}}>Filter Associate</label>
+              <label htmlFor="associateSelect" style={{textWrap:'nowrap',marginLeft:'50px'}}>Associate</label>
               <select style={{color:'black'}} name="" id="associateSelect" onChange={(e) => setEmployeeFilter(e.target.value)}>
                 <option disabled>Select Associate</option>
                 <option value={'all'}>All</option>
@@ -224,7 +224,7 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
                   <td >
                     {index + 1}
                   </td>
-                  <td >
+                  <td className='client-td'>
                     {highlightText(record.clientName, searchText)}
                   </td>
                   <td id='hide-mobile'>
