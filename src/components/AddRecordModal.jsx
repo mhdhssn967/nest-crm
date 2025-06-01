@@ -64,7 +64,7 @@ const AddRecordModal = ({triggerRefresh, setTriggerRefresh, companyId, employeeN
 
     return (
         <>
-            <button style={{backgroundColor:'none', border:'none'}} onClick={openModal}><i title='Add New Record' className="fa-solid fa-file-circle-plus"></i></button>
+            <button style={{background:'none', border:'none'}} onClick={openModal}><i title='Add New Record' className="fa-solid fa-file-circle-plus"></i></button>
             <Modal show={show} onHide={handleClose} dialogClassName="custom-modal" backdrop="static">
       <Modal.Header closeButton>
         <Modal.Title>Add a new Record</Modal.Title>
