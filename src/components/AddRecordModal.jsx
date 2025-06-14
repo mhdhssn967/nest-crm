@@ -25,7 +25,7 @@ const AddRecordModal = ({triggerRefresh, setTriggerRefresh, companyId, employeeN
  const handleSubmit=async(e)=>{
   const {date,clientName,place,country,personOfContact,pocDesignation,contactNo,personOfContact2,contactNo2,referralPerson,email,associate,currentStatus,fPrice,lPrice,lastContacted,nextFollowUp,remarks}=records
   e.preventDefault();
-    if(!clientName || !personOfContact || !contactNo){
+    if(!clientName){
       alert("Enter Required Fields")
       return;
         }
@@ -97,7 +97,7 @@ const AddRecordModal = ({triggerRefresh, setTriggerRefresh, companyId, employeeN
 
           {/* Contact Person */}
           <Form.Group className="mb-3">
-            <Form.Label>Contact Person*</Form.Label>
+            <Form.Label>Contact Person</Form.Label>
             <Form.Control type="text" placeholder="Enter Contact Person's Name" onChange={(e)=>setRecords({...records,personOfContact:e.target.value})}/>
           </Form.Group>
 
@@ -109,7 +109,7 @@ const AddRecordModal = ({triggerRefresh, setTriggerRefresh, companyId, employeeN
 
           {/* Contact Number */}
           <Form.Group className="mb-3">
-            <Form.Label>Contact Number*</Form.Label>
+            <Form.Label>Contact Number</Form.Label>
             <Form.Control type="number" placeholder="Enter Contact Number" onChange={(e)=>setRecords({...records,contactNo:e.target.value})}/>
           </Form.Group>
 
@@ -121,7 +121,7 @@ const AddRecordModal = ({triggerRefresh, setTriggerRefresh, companyId, employeeN
 
           {/* Contact Number 2*/}
           <Form.Group className="mb-3">
-            <Form.Label>Contact person 2 Number*</Form.Label>
+            <Form.Label>Contact person 2 Number</Form.Label>
             <Form.Control type="number" placeholder="Enter 2nd contact person Number" onChange={(e)=>setRecords({...records,contactNo2:e.target.value})}/>
           </Form.Group>
 
