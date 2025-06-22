@@ -24,7 +24,6 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
   const [employeeFilter, setEmployeeFilter] = useState('all')
   const [searchText, setSearchText] = useState('')
   
-
 // Filtering data
   const filterDisplay = async () => {
     if (employeeFilter === 'all') {

@@ -13,11 +13,7 @@ const Nav = ({employeeName}) => {
   return (
     <>
     <div className='nav'>
-      <div style={{display:'flex',alignItems:'center',textWrap:'nowrap'}}>
-        
             <img src={logo} alt="" />
-     
-      </div>
         <div className='nav-right'>
           <p style={{textWrap:'nowrap'}}><i className="fa-solid fa-circle-user"></i>{employeeName}</p>
           <button onClick={handleLogout} className='logout-btn'>Logout</button>

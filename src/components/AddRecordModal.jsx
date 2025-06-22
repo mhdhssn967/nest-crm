@@ -14,13 +14,14 @@ const AddRecordModal = ({triggerRefresh, setTriggerRefresh, companyId, employeeN
     const [records,setRecords]=useState({date:"",clientName:"",place:"",country:"",personOfContact:"",pocDesignation:"",contactNo:"",personOfContact2:"",contactNo2:"",referralPerson:"",email:"",associate:"",currentStatus:"",fPrice:"",lPrice:"",lastContacted:"",	nextFollowUp:"",	remarks:""})    
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+  const today = new Date().toISOString().split('T')[0];
 
     const openModal=()=>{
       handleShow()
-      setRecords({date:"",clientName:"",place:"",country:"",personOfContact:"",pocDesignation:"",contactNo:"",personOfContact2:"",contactNo2:"",referralPerson:"",email:"",associate:"",currentStatus:"",fPrice:"",lPrice:"",lastContacted:"",	nextFollowUp:"",	remarks:""})
+      setRecords({date:today,clientName:"",place:"",country:"",personOfContact:"",pocDesignation:"",contactNo:"",personOfContact2:"",contactNo2:"",referralPerson:"",email:"",associate:"",currentStatus:"New Lead",fPrice:"",lPrice:"",lastContacted:"",	nextFollowUp:"",	remarks:""})
     }
 
-    
+
 
  const handleSubmit=async(e)=>{
   const {date,clientName,place,country,personOfContact,pocDesignation,contactNo,personOfContact2,contactNo2,referralPerson,email,associate,currentStatus,fPrice,lPrice,lastContacted,nextFollowUp,remarks}=records

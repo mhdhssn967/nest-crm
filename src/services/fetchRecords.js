@@ -18,13 +18,13 @@ export const fetchCRMRecords = async (companyId, userId) => {
     let q;
     if (adminStatus) {
       // Admin: fetch all documents, ordered by creation
-      q = query(crmDataRef, orderBy('createdAt', 'desc'));
+      q = query(crmDataRef, orderBy('date', 'desc'));
     } else {
       // Non-admin: fetch only user-specific records
       q = query(
         crmDataRef,
         where('associate', '==', userId),
-        orderBy('createdAt', 'desc')
+        orderBy('date', 'desc')
       );
     }
 

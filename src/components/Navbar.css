@@ -32,11 +32,15 @@
 }
 .nav-right{
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     gap: 30px;
+    height: 30px;
 }
 .nav-right p{
     font-size: 20px;
+    display: flex;
+    /* align-items: center; */
+    /* height: 100%; */
 }
 .nav-right i{
     font-size: 20px;
