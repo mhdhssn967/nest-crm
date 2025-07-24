@@ -5,6 +5,7 @@
    align-items: center;
    justify-content: space-between;
    width: 100%;
+   
 }
 .nav img{
    margin: 0% 0.5% 0% 1%;
@@ -32,13 +33,16 @@
 }
 .nav-right{
     display: flex;
-    /* align-items: center; */
-    gap: 30px;
-    height: 30px;
+    /* height: 30px; */
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    align-items: end;
+    padding: 5px;
 }
 .nav-right p{
     font-size: 20px;
     display: flex;
+    margin: 0px;
     /* align-items: center; */
     /* height: 100%; */
 }
