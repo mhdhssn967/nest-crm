@@ -96,3 +96,12 @@
     background: none;
     border: none;
 }
+@media (max-width:600px){
+    .empty-chat img{
+        width: 150px;
+        height: 150px;
+    }
+    .callout{
+        transform: scale(0.8);
+    }
+}
