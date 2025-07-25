@@ -12,6 +12,7 @@ import { db } from '../firebaseConfig';
 import { fetchAllEmployees, getUserCompanyDetails } from '../services/fetchRecords';
 import { Await } from 'react-router-dom';
 import Nav from '../components/Nav';
+import ChatAI from '../components/ChatAI';
 
 const HomePage = () => {
   const [userName, setUserName] = useState("BD Associate");
@@ -99,6 +100,7 @@ useEffect(()=>{
   return (
     <>
     <Nav employeeName={employeeName}/>
+    
       <div style={{ display: 'flex', alignItems: 'center' }}><h1 className='homeTitle'> {userName}</h1><AddRecordModal triggerRefresh={triggerRefresh} setTriggerRefresh={setTriggerRefresh} companyId={companyId} employeeName={employeeName} /></div>
       <div style={{ display: 'flex', justifyContent: 'left', alignItems: 'start' }}>
         {/* <button style={{ margin: '1%' }} className='btn btn-secondary'>View Associates</button> */}
@@ -107,9 +109,9 @@ useEffect(()=>{
 
       {/* { admin==true&&(
       <div style={{margin:'3%'}}><AdminDashboard/></div>
-     )
+      )
 } */}
-
+<ChatAI companyId={companyId}/>
       <RecordsTable triggerRefresh={triggerRefresh} allEmployees={allEmployees} currentUser={currentUser} companyId={companyId}/>
     </>
   );

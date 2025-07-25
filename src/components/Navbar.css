@@ -34,8 +34,9 @@
 .nav-right{
     display: flex;
     /* height: 30px; */
-    background-color: var(--secondary-color);
+    /* background-color: var(--secondary-color); */
     border-radius: 5px;
+    gap: 60px;
     align-items: end;
     padding: 5px;
 }
@@ -60,4 +61,23 @@
     .logout-btn{
         transform: scale(0.8);
     }
+}
+.common-chat{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.msg{
+    height: fit-content;
+    display: flex;
+}
+.user-txt{
+    background-color: rgb(219, 219, 219);
+    padding:5px 10px;
+    border-radius: 20px 20px 0px 20px;
+}
+.ai-txt{
+    background-color: rgb(74, 204, 255);
+    padding:5px 10px;
+    border-radius: 20px 20px 20px 0px;
 }

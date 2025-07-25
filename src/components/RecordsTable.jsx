@@ -33,6 +33,8 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
       setDisplayedRecords(records.filter(rec=>rec.associate === employeeFilter))
     }
   };
+  console.log(records);
+  
 
   useEffect(() => {
     filterDisplay()
