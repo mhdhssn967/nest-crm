@@ -8,9 +8,14 @@
     background-color: rgb(235, 235, 235);
     padding:5px 10px;
     border-radius: 25px;
-    border: solid 1px;
+    /* border: solid 1px; */
     cursor: pointer;
 }
 .summary ul li span{
     font-weight: 800;
+}
+@media (max-width:600px){
+    .summary ul li,.summary ul li span{
+        font-size: 12px;
+    }
 }

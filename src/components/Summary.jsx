@@ -42,7 +42,7 @@ const Summary = ({setSelectedStatus,selectedStatus, displayRecords, getStatusCol
     <li
       onClick={() => setSelectedStatus('all')}
       style={{
-        border: selectedStatus == 'all' ? '1px solid #000' : 'none',
+        outline: selectedStatus == 'all' ? '1px solid #000' : 'none',
         borderRadius: '25px',
         padding: '5px 10px',
         cursor: 'pointer'
@@ -54,7 +54,7 @@ const Summary = ({setSelectedStatus,selectedStatus, displayRecords, getStatusCol
     <li
       onClick={() => setSelectedStatus('')}
       style={{
-        border: selectedStatus === '' ? '1px solid #000' : 'none',
+        outlinr: selectedStatus === '' ? '1px solid #000' : 'none',
         borderRadius: '25px',
         padding: '5px 10px',
         cursor: 'pointer'
@@ -68,7 +68,7 @@ const Summary = ({setSelectedStatus,selectedStatus, displayRecords, getStatusCol
         key={status}
         onClick={() => setSelectedStatus(status)}
         style={{
-          border: selectedStatus === status ? '1px solid #000' : 'none',
+          outline: selectedStatus === status ? '1px solid #000' : 'none',
           borderRadius: '25px',
           padding: '5px 10px',
           cursor: 'pointer',
