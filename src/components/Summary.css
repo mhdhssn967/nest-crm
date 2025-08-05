@@ -1,0 +1,16 @@
+.summary ul{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.summary ul li{
+    list-style: none;
+    background-color: rgb(235, 235, 235);
+    padding:5px 10px;
+    border-radius: 25px;
+    border: solid 1px;
+    cursor: pointer;
+}
+.summary ul li span{
+    font-weight: 800;
+}

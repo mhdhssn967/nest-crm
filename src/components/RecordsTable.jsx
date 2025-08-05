@@ -8,6 +8,7 @@ import fetchChildBDAs from '../services/fetchChildRecords';
 import loadingImg from '../assets/loading.png'
 import ViewRecord from './ViewRecord';
 import { Badge } from 'react-bootstrap';
+import Summary from './Summary';
 const adminId = import.meta.env.VITE_ADMIN_ID
 
 const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmployees }) => {
@@ -24,6 +25,10 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
   const [employeeFilter, setEmployeeFilter] = useState('all')
   const [searchText, setSearchText] = useState('')
   
+  const [selectedStatus,setSelectedStatus]=useState('all')
+console.log(selectedStatus);
+
+    
 // Filtering data
   const filterDisplay = async () => {
     if (employeeFilter === 'all') {
@@ -117,6 +122,7 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
     );
   };
 
+  
 
 
   // const fetchChilds = async () => {
@@ -193,6 +199,7 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
             </div>
           </div>
           </div>
+          <Summary selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus} getStatusColor={getStatusColor} displayRecords={displayedRecords}/>
       <div className='tableMain'>
 
         <table className="recordsTable">
@@ -219,73 +226,54 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
             </tr>
           </thead>
           <tbody>
-            {displayedRecords.length > 0 ? (
-              displayedRecords.map((record, index) => (
-                <tr  key={record.id} onClick={() => getViewRecord(record)}>
-                  <td >
-                    {index + 1}
-                  </td>
-                  <td className='client-td'>
-                    {highlightText(record.clientName, searchText)}
-                  </td>
-                  <td id='hide-mobile'>
-                    {highlightText(record.place, searchText)}
-                  </td>
-                  {/* <td >
-  {record.country}
-</td> */}
-                  <td id='hide-mobile'>
-                    {highlightText(record.personOfContact, searchText)}
-                  </td>
-                  {/* <td >
-  {record.pocDesignation}
-</td> */}
-                  <td id='hide-mobile'>
-                    {highlightText(record.contactNo, searchText)}
-                  </td>
-                  {/* <td >
-  {record.personOfContact2}
-</td> */}
-                  {/* <td >
-  {record.contactNo2}
-</td> */}
-                  {/* <td >
-  {record.referralPerson}
-</td> */}
-                  {/* <td >
-                    {highlightText(record.email, searchText)}
-                  </td> */}
-                  <td id='hide-mobile'>
-                    {highlightText(record.employeeName, searchText)}
-                  </td>
-                  <td style={{display:'flex',justifyContent:'center',alignItems:'center',paddingTop:'20px'}}>
-  <p style={{ backgroundColor: getStatusColor(record.currentStatus) ,padding:'5px 10px',borderRadius:'40px',textWrap:'nowrap',width:'fit-content'}}>{highlightText(record.currentStatus, searchText)}</p>
-</td>
+  {displayedRecords.length > 0 ? (
+    displayedRecords
+      .filter(record => selectedStatus === 'all' || record.currentStatus === selectedStatus)
+      .map((record, index) => (
+        <tr key={record.id} onClick={() => getViewRecord(record)}>
+          <td>{index + 1}</td>
+          <td className='client-td'>
+            {highlightText(record.clientName, searchText)}
+          </td>
+          <td id='hide-mobile'>
+            {highlightText(record.place, searchText)}
+          </td>
+          <td id='hide-mobile'>
+            {highlightText(record.personOfContact, searchText)}
+          </td>
+          <td id='hide-mobile'>
+            {highlightText(record.contactNo, searchText)}
+          </td>
+          <td id='hide-mobile'>
+            {highlightText(record.employeeName, searchText)}
+          </td>
+          <td style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '20px' }}>
+            <p style={{
+              backgroundColor: getStatusColor(record.currentStatus),
+              padding: '5px 10px',
+              borderRadius: '40px',
+              textWrap: 'nowrap',
+              width: 'fit-content'
+            }}>
+              {highlightText(record.currentStatus, searchText)}
+            </p>
+          </td>
+          <td id='hide-mobile' style={
+            record.nextFollowUp <= formattedDate && record.nextFollowUp !== null
+              ? { backgroundColor: '' }
+              : { backgroundColor: 'var(--warning-color)' }
+          }>
+            {highlightText(record.nextFollowUp, searchText)}
+          </td>
+        </tr>
+      ))
+  ) : (
+    <tr>
+      <td colSpan="10" style={{ textAlign: 'center' }}>No records found</td>
+    </tr>
+  )}
+</tbody>
 
-                  {/* <td >
-  {record.fPrice}
-</td> */}
-                  {/* <td >
-                    {highlightText(record.lPrice?.toString(), searchText)}
-                  </td> */}
-                  {/* <td >
-  {record.lastContacted}
-</td> */}
-                  <td id='hide-mobile' style={record.nextFollowUp <= formattedDate && record.nextFollowUp !== null ? { backgroundColor: '' } : { backgroundColor: 'var(--warning-color)' }}>
-                    {highlightText(record.nextFollowUp, searchText)}
-                  </td>
-                  {/* <td id='remarkTD' >
-  {record.remarks}
-</td> */}
-
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="10" style={{ textAlign: 'center' }}>No records found</td>
-              </tr>
-            )}
-          </tbody>
         </table>
       </div>
     </div>

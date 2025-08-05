@@ -3,8 +3,9 @@ import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
 import './ChatAI.css'
 import aiimg from '../assets/wavebot.gif'
-import ai2 from '../assets/ai2.png'
-import ai3 from '../assets/ai2.jpg'
+import ai3 from '../assets/ai2.png'
+import Typing from './Typing';
+import callout from '../assets/callout.png'
 
 const ChatAI = ({ companyId }) => {
   const [message, setMessage] = useState('');
@@ -61,14 +62,13 @@ const ChatAI = ({ companyId }) => {
 
               </div>
             ))}
-            {loading && <div style={styles.aiMsg}><strong><img width={'20px'} src={ai3} alt="" /></strong> Typing...</div>}
+            {loading && <div style={styles.aiMsg}><img width={'20px'} src={ai3} alt="" /><Typing/>
+</div>}
           </>:
           <>
           <div className='empty-chat'>
             <img width={'260px'} src={aiimg} alt="" />
-            <div className='callout'><p>Hi. I am <strong>Oqulix Smart Assistant.</strong></p>
-            <p>How can I help you today?</p>
-            </div>
+            <img className='callout' width={'300px'} src={callout} alt="" />
            </div>
           </>}
         </div>
@@ -92,19 +92,20 @@ const ChatAI = ({ companyId }) => {
 // 🖌️ Styled for clarity
 const styles = {
   container: {
-    maxWidth: '600px',
+    maxWidth: '90vw',
     margin: '2rem auto',
     padding: '1rem',
     border: '1px solid #ccc',
     borderRadius: '8px',
     backgroundColor: '#ffffff',
+    height:'600px'
   },
   chatBox: {
     minHeight: '200px',
-    maxHeight: '300px',
+    maxHeight: '470px',
     overflowY: 'auto',
     padding: '0.5rem',
-    backgroundColor: '#fbfbfcff',
+    backgroundColor: '#eaeaebff',
     marginBottom: '1rem',
     borderRadius: '6px',
     display:'flex',
@@ -144,7 +145,7 @@ const styles = {
   button:{
     backgorund:'none',
     border:'none',
-    backgroundColor:'var(--secondary-color)',
+
     width:'55px',
     color:'rgb(0, 64, 124)',
     borderRadius:'10px'

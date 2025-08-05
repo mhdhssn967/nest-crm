@@ -15,17 +15,8 @@
 }
 
 .callout {
-  position: relative;
-  background-color: #f1f5f9;
-  border-left: 4px solid #3b82f6;
-  padding: 1rem;
-  margin: 1rem 0;
-  border-radius: 10px;
-  color: #1e293b;
-  max-width: 300px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  height: fit-content;
-  margin-left: -5np0px;
+  margin-left: -100px;
+  margin-top: -200px;
 }
 
 @keyframes giggleBot {
@@ -69,6 +60,8 @@
     display: flex;
     justify-content: center;
     align-self: center;
+    height: 500px;
+    align-items: center;
 }
 .chat-container{
     animation: openChat 0.5s;
@@ -104,4 +97,26 @@
     .callout{
         transform: scale(0.8);
     }
+}
+
+.common-chat{
+    display: flex;
+    align-items: start;
+    gap: 10px;
+}
+.msg{
+    height: fit-content;
+    display: flex;
+}
+.user-txt{
+    background-color: rgb(49, 49, 49);
+    padding:5px 10px;
+    color: rgb(240, 240, 240);
+    border-radius: 20px 20px 0px 20px;
+}
+.ai-txt{
+    /* background-color: rgb(65, 65, 65); */
+    padding:5px 10px;
+    color: rgb(66, 66, 66);
+    border-radius: 20px 20px 20px 0px;
 }
