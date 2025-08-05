@@ -111,7 +111,7 @@ useEffect(()=>{
       <div style={{margin:'3%'}}><AdminDashboard/></div>
       )
 } */}
-{/* <ChatAI companyId={companyId}/> */}
+<ChatAI companyId={companyId}/>
       <RecordsTable triggerRefresh={triggerRefresh} allEmployees={allEmployees} currentUser={currentUser} companyId={companyId}/>
     </>
   );
