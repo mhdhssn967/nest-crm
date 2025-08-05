@@ -9,6 +9,7 @@ import loadingImg from '../assets/loading.png'
 import ViewRecord from './ViewRecord';
 import { Badge } from 'react-bootstrap';
 import Summary from './Summary';
+import UpcomingFollowUps from './UpcomingFollowUps';
 const adminId = import.meta.env.VITE_ADMIN_ID
 
 const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmployees }) => {
@@ -162,7 +163,7 @@ console.log(selectedStatus);
     <div>
       {
         viewRecord == true && <ViewRecord setViewRecord={setViewRecord} viewRecordData={viewRecordData} setUpdateTable={setUpdateTable} updateTable={updateTable} companyId={companyId}/>}
-
+<UpcomingFollowUps records={records}/>
 <div className='tableSelect'>
           {/* Search Bar */}
           <div className='filter-main'>
