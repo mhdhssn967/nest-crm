@@ -10,6 +10,8 @@ import ViewRecord from './ViewRecord';
 import { Badge } from 'react-bootstrap';
 import Summary from './Summary';
 import UpcomingFollowUps from './UpcomingFollowUps';
+import StatusChart from './StatusChart';
+import ClientPerEmployeeChart from './ClientPerEmployeeChart';
 const adminId = import.meta.env.VITE_ADMIN_ID
 
 const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmployees }) => {
@@ -75,6 +77,7 @@ console.log(selectedStatus);
 
 
 
+console.log(formattedDate);
 
 
 
@@ -164,6 +167,10 @@ console.log(selectedStatus);
       {
         viewRecord == true && <ViewRecord setViewRecord={setViewRecord} viewRecordData={viewRecordData} setUpdateTable={setUpdateTable} updateTable={updateTable} companyId={companyId}/>}
 <UpcomingFollowUps records={records}/>
+<div className='insights'>
+<StatusChart records={displayedRecords}/>
+<ClientPerEmployeeChart records={records}/>
+</div>
 <div className='tableSelect'>
           {/* Search Bar */}
           <div className='filter-main'>
@@ -259,11 +266,15 @@ console.log(selectedStatus);
               {highlightText(record.currentStatus, searchText)}
             </p>
           </td>
-          <td id='hide-mobile' style={
-            record.nextFollowUp <= formattedDate && record.nextFollowUp !== null
-              ? { backgroundColor: '' }
-              : { backgroundColor: 'var(--warning-color)' }
-          }>
+          <td
+  id="hide-mobile"
+  style={
+    record.nextFollowUp && new Date(record.nextFollowUp) < new Date(formattedDate)
+      ? { backgroundColor: 'var(--warning-color)' }
+      : {}
+  }
+>
+
             {highlightText(record.nextFollowUp, searchText)}
           </td>
         </tr>
