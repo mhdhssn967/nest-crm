@@ -3,7 +3,7 @@ import Table from 'react-bootstrap/Table';
 import { fetchCRMRecords } from '../services/fetchRecords';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import './RecordsTable.css';
-import getBDAName from '../services/fetchNames';
+import getBDAName, { isAdmin } from '../services/fetchNames';
 import fetchChildBDAs from '../services/fetchChildRecords';
 import loadingImg from '../assets/loading.png'
 import ViewRecord from './ViewRecord';
@@ -27,9 +27,12 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
   const [loading, setLoading] = useState(true);
   const [employeeFilter, setEmployeeFilter] = useState('all')
   const [searchText, setSearchText] = useState('')
-  
+  const [checkAdmin,setCheckAdmin]=useState(false)
   const [selectedStatus,setSelectedStatus]=useState('all')
-console.log(selectedStatus);
+
+
+  
+
 
     
 // Filtering data
@@ -41,7 +44,7 @@ console.log(selectedStatus);
       setDisplayedRecords(records.filter(rec=>rec.associate === employeeFilter))
     }
   };
-  console.log(records);
+
   
 
   useEffect(() => {
@@ -66,6 +69,8 @@ console.log(selectedStatus);
       setRecords(CRMDataRef)
       setDisplayedRecords(CRMDataRef)
       console.log(displayedRecords);
+      const isAdminRef=await isAdmin(currentUser.uid);
+      setCheckAdmin(isAdminRef)
       setLoading(false)
     } else {
       console.warn("Missing currentUser or companyId");
@@ -77,7 +82,6 @@ console.log(selectedStatus);
 
 
 
-console.log(formattedDate);
 
 
 
@@ -167,10 +171,10 @@ console.log(formattedDate);
       {
         viewRecord == true && <ViewRecord setViewRecord={setViewRecord} viewRecordData={viewRecordData} setUpdateTable={setUpdateTable} updateTable={updateTable} companyId={companyId}/>}
 <UpcomingFollowUps records={records}/>
-<div className='insights'>
+{checkAdmin&&<div className='insights'>
 <StatusChart records={displayedRecords}/>
 <ClientPerEmployeeChart records={records}/>
-</div>
+</div>}
 <div className='tableSelect'>
           {/* Search Bar */}
           <div className='filter-main'>
