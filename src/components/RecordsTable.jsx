@@ -13,6 +13,7 @@ import UpcomingFollowUps from './UpcomingFollowUps';
 import StatusChart from './StatusChart';
 import ClientPerEmployeeChart from './ClientPerEmployeeChart';
 const adminId = import.meta.env.VITE_ADMIN_ID
+import OQ from '../assets/OQ.png'
 
 const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmployees }) => {
 
@@ -162,7 +163,7 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
     setViewRecordData(record)
   }
 
-  if (loading) return <div className='loadingDiv' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><h1 style={{ textAlign: 'center', margin: '10%' }}>Loading records <img src={loadingImg} width={'50px'} alt="image" /></h1></div>;
+  if (loading) return <div className='loadingDiv' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><div className='load-inside'></div><img className='pulse' src={OQ} width={'80px'} alt="image" /></div>;
 
   if (!currentUser) return <p>Please log in to view records.</p>;
 

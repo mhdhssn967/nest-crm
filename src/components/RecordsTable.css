@@ -56,7 +56,25 @@
 }
 .loadingDiv img{
     filter: invert(1);
-    animation: rotateLoading 1s linear infinite;
+    position: absolute;
+  
+}
+.load-inside{
+    /* background-color: aqua; */
+    padding: 20px;
+    border-radius: 120px;
+    height: 120px;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 5px solid #ffffff;
+  border-top: 5px solid #272627;
+      animation: rotateLoading 1s linear infinite;
+}
+
+.loadingDiv{
+    height: 80vh;
 }
 @keyframes rotateLoading {
     0%{
