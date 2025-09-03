@@ -149,6 +149,7 @@ const AddRecordModal = ({triggerRefresh, setTriggerRefresh, companyId, employeeN
               <option value="Follow up needed">Follow-Up Needed</option>
               <option value="Quotation Sent">Quotation Sent</option>
               <option value="Awaiting Decision">Awaiting Decision</option>
+              <option value="Token Recieved">Token Recieved</option>
               <option value="Deal Closed">Converted (Deal Won)</option>
               <option value="Deal Lost">Not Interested (Deal Lost)</option>
             </Form.Select>

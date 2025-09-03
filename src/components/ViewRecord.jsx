@@ -134,6 +134,9 @@ const ViewRecord = ({
                       <option value="Awaiting Decision">
                         Awaiting Decision
                       </option>
+                      <option value="Token Recieved">
+                        Token Recieved
+                      </option>
                       <option value="Deal Closed">Converted (Deal Won)</option>
                       <option value="Deal Lost">
                         Not Interested (Deal Lost)
