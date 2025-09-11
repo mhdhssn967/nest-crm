@@ -11,14 +11,14 @@ import './AddRecordModal.css'
 const AddRecordModal = ({triggerRefresh, setTriggerRefresh, companyId, employeeName}) => {
 
     const [show, setShow] = useState(false);
-    const [records,setRecords]=useState({date:"",clientName:"",place:"",country:"",personOfContact:"",pocDesignation:"",contactNo:"",personOfContact2:"",contactNo2:"",referralPerson:"",email:"",associate:"",currentStatus:"",fPrice:"",lPrice:"",lastContacted:"",	nextFollowUp:"",	remarks:""})    
+    const [records,setRecords]=useState({date:"",clientName:"",priority:"",place:"",country:"",personOfContact:"",pocDesignation:"",contactNo:"",personOfContact2:"",contactNo2:"",referralPerson:"",email:"",associate:"",currentStatus:"",fPrice:"",lPrice:"",lastContacted:"",	nextFollowUp:"",	remarks:""})    
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
   const today = new Date().toISOString().split('T')[0];
 
     const openModal=()=>{
       handleShow()
-      setRecords({date:today,clientName:"",place:"",country:"",personOfContact:"",pocDesignation:"",contactNo:"",personOfContact2:"",contactNo2:"",referralPerson:"",email:"",associate:"",currentStatus:"New Lead",fPrice:"",lPrice:"",lastContacted:"",	nextFollowUp:"",	remarks:""})
+      setRecords({date:today,clientName:"",priority:"",place:"",country:"",personOfContact:"",pocDesignation:"",contactNo:"",personOfContact2:"",contactNo2:"",referralPerson:"",email:"",associate:"",currentStatus:"New Lead",fPrice:"",lPrice:"",lastContacted:"",	nextFollowUp:"",	remarks:""})
     }
 
 
@@ -34,6 +34,7 @@ const AddRecordModal = ({triggerRefresh, setTriggerRefresh, companyId, employeeN
           await addDoc(collection(db, "userData",companyId,"CRMdata" ),{
             date,
             clientName,
+            priority,
             place,
             country,
             personOfContact,
@@ -82,6 +83,17 @@ const AddRecordModal = ({triggerRefresh, setTriggerRefresh, companyId, employeeN
           <Form.Group className="mb-3">
             <Form.Label>Client Name*</Form.Label>
             <Form.Control type="text" placeholder="Enter Client Name" onChange={(e)=>setRecords({...records,clientName:e.target.value})} />
+          </Form.Group>
+
+          {/* Priority dropdwon */}
+          <Form.Group className="mb-3">
+            <Form.Label>Priority</Form.Label>
+            <Form.Select onChange={(e)=>setRecords({...records,priority:e.target.value})}>
+              <option value="" disabled selected>Select Priority</option>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+              </Form.Select>
           </Form.Group>
 
           {/* Place */}

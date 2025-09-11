@@ -75,6 +75,21 @@ const ViewRecord = ({
               style={{ width: "40px", filter: "invert(1)", cursor: "pointer" }}
               onClick={() => setViewRecord(false)}
             />
+            <td>
+                  {isEditing ? (
+                    <select
+                      value={editedData.priority}
+                      onChange={(e) => handleChange(e, "priority")}
+                    >
+                      <option value="Low">Low</option>
+                      <option value="Medium">Medium</option>
+                      <option value="High">High</option>
+
+                    </select>
+                  ) : (
+                    editedData.currentStatus
+                  )}
+                </td>
           </div>
 
           {/* Record table System */}
@@ -120,32 +135,7 @@ const ViewRecord = ({
                     <i className="fa-solid fa-bookmark"></i> Status:
                   </strong>
                 </td>
-                <td>
-                  {isEditing ? (
-                    <select
-                      value={editedData.currentStatus}
-                      onChange={(e) => handleChange(e, "currentStatus")}
-                    >
-                      <option value="New Lead">New Lead</option>
-                      <option value="Contacted">Contacted</option>
-                      <option value="Interested">Interested</option>
-                      <option value="Follow up needed">Follow-Up Needed</option>
-                      <option value="Quotation Sent">Quotation Sent</option>
-                      <option value="Awaiting Decision">
-                        Awaiting Decision
-                      </option>
-                      <option value="Token Recieved">
-                        Token Recieved
-                      </option>
-                      <option value="Deal Closed">Converted (Deal Won)</option>
-                      <option value="Deal Lost">
-                        Not Interested (Deal Lost)
-                      </option>
-                    </select>
-                  ) : (
-                    editedData.currentStatus
-                  )}
-                </td>
+                 
               </tr>
 
               <tr>
