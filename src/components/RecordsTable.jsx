@@ -241,55 +241,92 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
           <tbody>
   {displayedRecords.length > 0 ? (
     displayedRecords
-      .filter(record => selectedStatus === 'all' || record.currentStatus === selectedStatus)
+      .filter(
+        (record) =>
+          selectedStatus === "all" || record.currentStatus === selectedStatus
+      )
       .map((record, index) => (
-        <tr key={record.id} onClick={() => getViewRecord(record)}>
-          <td>{index + 1}</td>
-          <td className='client-td'>
+        <tr
+          key={record.id}
+          onClick={() => getViewRecord(record)}
+          style={{ position: "relative" }}
+        >
+          {/* Priority Ribbon */}
+          
+
+          <td><div
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              bottom: 0,
+              width: "16px",
+              backgroundColor:
+                record.priority === "High"
+                  ? "#e63946" // dark red
+                  : record.priority === "Medium"
+                  ? "#e9c46a" // dark yellow
+                  : "#2a9d8f", // dark green
+              borderRadius: "0 6px 6px 0",
+            }}
+          ></div><p style={{marginLeft:'20px'}}>{index + 1}</p></td>
+          <td className="client-td">
             {highlightText(record.clientName, searchText)}
           </td>
-          <td id='hide-mobile'>
+          <td id="hide-mobile">
             {highlightText(record.place, searchText)}
           </td>
-          <td id='hide-mobile'>
+          <td id="hide-mobile">
             {highlightText(record.personOfContact, searchText)}
           </td>
-          <td id='hide-mobile'>
+          <td id="hide-mobile">
             {highlightText(record.contactNo, searchText)}
           </td>
-          <td id='hide-mobile'>
+          <td id="hide-mobile">
             {highlightText(record.employeeName, searchText)}
           </td>
-          <td style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '20px' }}>
-            <p style={{
-              backgroundColor: getStatusColor(record.currentStatus),
-              padding: '5px 10px',
-              borderRadius: '40px',
-              textWrap: 'nowrap',
-              width: 'fit-content'
-            }}>
+          <td
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              paddingTop: "20px",
+            }}
+          >
+            <p
+              style={{
+                backgroundColor: getStatusColor(record.currentStatus),
+                padding: "5px 10px",
+                borderRadius: "40px",
+                textWrap: "nowrap",
+                width: "fit-content",
+              }}
+            >
               {highlightText(record.currentStatus, searchText)}
             </p>
           </td>
           <td
-  id="hide-mobile"
-  style={
-    record.nextFollowUp && new Date(record.nextFollowUp) < new Date(formattedDate)
-      ? { backgroundColor: 'var(--warning-color)' }
-      : {}
-  }
->
-
+            id="hide-mobile"
+            style={
+              record.nextFollowUp &&
+              new Date(record.nextFollowUp) < new Date(formattedDate)
+                ? { backgroundColor: "var(--warning-color)" }
+                : {}
+            }
+          >
             {highlightText(record.nextFollowUp, searchText)}
           </td>
         </tr>
       ))
   ) : (
     <tr>
-      <td colSpan="10" style={{ textAlign: 'center' }}>No records found</td>
+      <td colSpan="10" style={{ textAlign: "center" }}>
+        No records found
+      </td>
     </tr>
   )}
 </tbody>
+
 
         </table>
       </div>

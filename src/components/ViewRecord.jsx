@@ -68,28 +68,64 @@ const ViewRecord = ({
               alignItems: "center",
             }}
           >
-            <h1>Detailed Record Information</h1>
+            
+           
+  <div style={{display:'flex',gap:'15px'}}>
+    {isEditing ? (
+      <select
+        value={editedData.priority}
+        onChange={(e) => handleChange(e, "priority")}
+      >
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+    ) : (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          cursor: "pointer",
+        }}
+        title={editedData.priority} // optional tooltip
+      >
+        <span
+          style={{
+            display: "inline-block",
+            width: "24px",
+            height: "24px",
+            borderRadius: "50%",
+            backgroundColor:
+              editedData.priority === "High"
+                ? "#e63946" // darkish red
+                : editedData.priority === "Medium"
+                ? "#e9c46a" // darkish yellow
+                : "#2a9d8f", // darkish green
+          }}
+        ></span>
+        <span
+          style={{
+            visibility: "hidden",
+            transition: "0.3s",
+          }}
+          className="priority-text"
+        >
+          {editedData.priority}
+        </span>
+      </div>
+    )}
+  <h1>Detailed Record Information</h1>
+  </div>
             <img
               src={close}
               alt=""
               style={{ width: "40px", filter: "invert(1)", cursor: "pointer" }}
               onClick={() => setViewRecord(false)}
             />
-            <td>
-                  {isEditing ? (
-                    <select
-                      value={editedData.priority}
-                      onChange={(e) => handleChange(e, "priority")}
-                    >
-                      <option value="Low">Low</option>
-                      <option value="Medium">Medium</option>
-                      <option value="High">High</option>
+            
 
-                    </select>
-                  ) : (
-                    editedData.currentStatus
-                  )}
-                </td>
+
           </div>
 
           {/* Record table System */}

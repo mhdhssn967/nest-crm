@@ -24,7 +24,7 @@ const AddRecordModal = ({triggerRefresh, setTriggerRefresh, companyId, employeeN
 
 
  const handleSubmit=async(e)=>{
-  const {date,clientName,place,country,personOfContact,pocDesignation,contactNo,personOfContact2,contactNo2,referralPerson,email,associate,currentStatus,fPrice,lPrice,lastContacted,nextFollowUp,remarks}=records
+  const {date,clientName,priority,place,country,personOfContact,pocDesignation,contactNo,personOfContact2,contactNo2,referralPerson,email,associate,currentStatus,fPrice,lPrice,lastContacted,nextFollowUp,remarks}=records
   e.preventDefault();
     if(!clientName){
       alert("Enter Required Fields")
