@@ -2,3 +2,29 @@
     margin: 20px 15px;
     font-weight: 800;
 }
+.page-switch-btns {
+  display: flex;
+  gap: 10px;
+  margin: 20px;
+}
+
+.page-switch-btns button {
+  padding: 5px 5px;
+  border: 2px solid #373838;
+  background: white;
+  color: #252525;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.page-switch-btns button:hover {
+  background: #6e6e6e;
+  color: white;
+}
+
+.page-switch-btns button.active {
+  background: #333333;
+  color: white;
+}
