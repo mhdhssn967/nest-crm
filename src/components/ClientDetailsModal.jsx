@@ -76,97 +76,134 @@ const ClientDetailsModal = ({ client: initialClient, onHide, companyId, refreshC
 
   return (
     <Modal show={!!client} onHide={onHide} centered>
-      <Modal.Header closeButton>
-        <Modal.Title>{client?.name} - Details</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        {client && (
-          <>
-            <p><strong>Category:</strong> {client.category}</p>
-            <p><strong>Total Amount:</strong> ₹{client.total.toLocaleString("en-IN")}</p>
-            <p><strong>Pending:</strong> ₹{pending.toLocaleString("en-IN")}</p>
+  <Modal.Header closeButton>
+    <Modal.Title>{client?.name} - Details</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    {client && (
+      <>
+        <p>
+          <strong>Category:</strong> {client.category}
+        </p>
+        <p>
+          <strong>Total Amount:</strong> ₹
+          {client.total.toLocaleString("en-IN")}
+        </p>
+        <p>
+          <strong>Pending:</strong> ₹
+          {pending.toLocaleString("en-IN")}
+        </p>
 
-            <hr />
-            <h5>Payment History</h5>
-            {client.received && client.received.length > 0 ? (
-              <ul>
-                {client.received.map((r, idx) => (
-                  <li key={idx}>
-                    ₹{r.amount.toLocaleString("en-IN")} - {r.note || "No note"}{" "}
-                    <small>({new Date(r.date).toLocaleDateString()})</small>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No payments recorded yet.</p>
-            )}
-
-            <hr />
-            <h5>Add New Payment</h5>
-            <InputGroup className="mb-2">
-              <Form.Control
-                type="number"
-                placeholder="Amount"
-                name="amount"
-                value={newPayment.amount}
-                onChange={handlePaymentChange}
-              />
-              <Form.Control
-                type="text"
-                placeholder="Note"
-                name="note"
-                value={newPayment.note}
-                onChange={handlePaymentChange}
-              />
-              <Button variant="secondary" onClick={addPayment} disabled={addingPayment}>
-                Add
-              </Button>
-            </InputGroup>
-
-            <hr />
-            <h5>Remarks</h5>
-            {editingRemarks ? (
-              <>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  value={remarks}
-                  onChange={(e) => setRemarks(e.target.value)}
-                />
-                <div className="mt-2 d-flex justify-content-end">
-                  <Button variant="success" size="sm" onClick={saveRemarks}>
-                    Save
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    className="ms-2"
-                    onClick={() => setEditingRemarks(false)}
-                  >
-                    Cancel
-                  </Button>
-                </div>
-              </>
-            ) : (
-              <div className="d-flex justify-content-between align-items-center">
-                <p className="mb-0">{client.remarks || "No remarks"}</p>
-                <Button variant="outline-primary" size="sm" onClick={() => setEditingRemarks(true)}>
-                  Edit
-                </Button>
-<Button
-  variant="danger"
-  onClick={(e) => {
-    e.stopPropagation(); // prevent opening modal when clicking delete
-    handleDeleteClient(client.id);
-  }}
->
-  Delete
-</Button>              </div>
-            )}
-          </>
+        <hr />
+        <h5>Payment History</h5>
+        {client.received && client.received.length > 0 ? (
+          <ul>
+            {client.received.map((r, idx) => (
+              <li key={idx}>
+                ₹{r.amount.toLocaleString("en-IN")} - {r.note || "No note"}{" "}
+                <small>({new Date(r.date).toLocaleDateString()})</small>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No payments recorded yet.</p>
         )}
-      </Modal.Body>
-    </Modal>
+
+        <hr />
+        <h5>Add New Payment</h5>
+        <InputGroup className="mb-2">
+          <Form.Control
+            type="number"
+            placeholder="Amount"
+            name="amount"
+            value={newPayment.amount}
+            onChange={handlePaymentChange}
+          />
+          <Form.Control
+            type="text"
+            placeholder="Note"
+            name="note"
+            value={newPayment.note}
+            onChange={handlePaymentChange}
+          />
+          <Button
+            variant="secondary"
+            onClick={addPayment}
+            disabled={addingPayment}
+          >
+            Add
+          </Button>
+        </InputGroup>
+
+        <hr />
+
+        <h5>Client Information</h5>
+        {client.clientInformation &&
+        Object.keys(client.clientInformation).length > 0 ? (
+          <ul>
+            {Object.entries(client.clientInformation).map(([key, value], idx) => (
+              <li key={idx}>
+                <strong>{key}:</strong> {value}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No extra client information.</p>
+        )}
+
+        <hr />
+        <h5>Remarks</h5>
+        {editingRemarks ? (
+          <>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              value={remarks}
+              onChange={(e) => setRemarks(e.target.value)}
+            />
+            <div className="mt-2 d-flex justify-content-end">
+              <Button variant="success" size="sm" onClick={saveRemarks}>
+                Save
+              </Button>
+              <Button
+                variant="secondary"
+                size="sm"
+                className="ms-2"
+                onClick={() => setEditingRemarks(false)}
+              >
+                Cancel
+              </Button>
+            </div>
+          </>
+        ) : (
+          <div className="d-flex justify-content-between align-items-center">
+            <p className="mb-0">{client.remarks || "No remarks"}</p>
+            <div className="d-flex gap-2">
+              <Button
+                variant="outline-primary"
+                size="sm"
+                onClick={() => setEditingRemarks(true)}
+              >
+                Edit Remarks
+              </Button>
+              <Button
+                variant="danger"
+                size="sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDeleteClient(client.id);
+                }}
+              >
+                Delete
+              </Button>
+            </div>
+          </div>
+        )}
+      </>
+    )}
+  </Modal.Body>
+</Modal>
+
   );
 };
 

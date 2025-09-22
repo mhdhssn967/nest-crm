@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button, Form, InputGroup } from "react-bootstrap";
+import { Modal, Button, Form, InputGroup, Row, Col } from "react-bootstrap";
 import { addClient } from "../services/clientServices";
 
 const AddClientModal = ({ show, onHide, companyId, services, triggerRefresh, setTriggerRefresh }) => {
@@ -7,12 +7,16 @@ const AddClientModal = ({ show, onHide, companyId, services, triggerRefresh, set
     name: "",
     service: services && services.length > 0 ? services[0] : "",
     total: "",
-    received: [], // now an array
+    received: [], // array of payments
     notes: "",
+    clientInformation: {}, // new field
   });
 
   // temporary state for adding a new payment
   const [payment, setPayment] = useState({ amount: "", note: "" });
+
+  // dynamic client information fields
+  const [infoFields, setInfoFields] = useState([{ field: "", value: "" }]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -23,55 +27,71 @@ const AddClientModal = ({ show, onHide, companyId, services, triggerRefresh, set
   };
 
   const addPayment = () => {
-  if (!payment.amount) return;
+    if (!payment.amount) return;
 
-  const paymentWithDate = {
-    amount: parseInt(payment.amount),
-    note: payment.note,
-    date: new Date().toISOString(), // add today's date
+    const paymentWithDate = {
+      amount: parseInt(payment.amount),
+      note: payment.note,
+      date: new Date().toISOString(), // today's date
+    };
+
+    setForm({
+      ...form,
+      received: [...form.received, paymentWithDate],
+    });
+
+    setPayment({ amount: "", note: "" });
   };
 
-  setForm({
-    ...form,
-    received: [...form.received, paymentWithDate],
-  });
+  const handleInfoChange = (index, key, value) => {
+    const newFields = [...infoFields];
+    newFields[index][key] = value;
+    setInfoFields(newFields);
+  };
 
-  setPayment({ amount: "", note: "" });
-};
-
+  const addInfoField = () => {
+    setInfoFields([...infoFields, { field: "", value: "" }]);
+  };
 
   const handleSubmit = async () => {
     if (!form.name || !form.total) return;
 
+    // build clientInformation object
+    const clientInformation = {};
+    infoFields.forEach((item) => {
+      if (item.field && item.value) {
+        clientInformation[item.field] = item.value;
+      }
+    });
+
     // total received sum
-    const totalReceived = form.received.reduce(
-      (sum, r) => sum + r.amount,
-      0
-    );
-    
-    
+    const totalReceived = form.received.reduce((sum, r) => sum + r.amount, 0);
 
     const clientData = {
       name: form.name,
       service: form.service,
       total: parseInt(form.total),
-      received: form.received, // array of payments
-      pending: (Number(form.total-totalReceived)),
+      received: form.received,
+      pending: Number(form.total - totalReceived),
       notes: form.notes,
+      clientInformation, // ✅ save in desired format
     };
 
     try {
       await addClient(companyId, clientData);
 
+      // reset everything
       setForm({
         name: "",
         service: services && services.length > 0 ? services[0] : "",
         total: "",
         received: [],
         notes: "",
+        clientInformation: {},
       });
       setPayment({ amount: "", note: "" });
-      setTriggerRefresh(!triggerRefresh)
+      setInfoFields([{ field: "", value: "" }]);
+      setTriggerRefresh(!triggerRefresh);
       onHide();
     } catch (error) {
       console.error("Error adding client:", error);
@@ -96,7 +116,7 @@ const AddClientModal = ({ show, onHide, companyId, services, triggerRefresh, set
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>service</Form.Label>
+            <Form.Label>Service</Form.Label>
             <Form.Select
               name="service"
               value={form.service}
@@ -164,6 +184,37 @@ const AddClientModal = ({ show, onHide, companyId, services, triggerRefresh, set
               value={form.notes}
               onChange={handleChange}
             />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Client Information (If any)</Form.Label>
+            {infoFields.map((item, idx) => (
+              <Row key={idx} className="mb-2">
+                <Col>
+                  <Form.Control
+                    type="text"
+                    placeholder="Field (e.g. email)"
+                    value={item.field}
+                    onChange={(e) =>
+                      handleInfoChange(idx, "field", e.target.value)
+                    }
+                  />
+                </Col>
+                <Col>
+                  <Form.Control
+                    type="text"
+                    placeholder="Value (e.g. abc@gmail.com)"
+                    value={item.value}
+                    onChange={(e) =>
+                      handleInfoChange(idx, "value", e.target.value)
+                    }
+                  />
+                </Col>
+              </Row>
+            ))}
+            <Button variant="outline-primary" size="sm" onClick={addInfoField}>
+              + Add Info
+            </Button>
           </Form.Group>
         </Form>
       </Modal.Body>

@@ -17,3 +17,6 @@
   font-weight: bold;
   font-size: 18px !important;
 }
+.client-detail-main{
+    display: flex;
+}
