@@ -104,7 +104,7 @@ const HomePage = () => {
   return (
     <>
       <Nav employeeName={employeeName} />
-      <div className="page-switch-btns">
+      {admin&&<div className="page-switch-btns">
         <button
           className={page === "leads" ? "active" : ""}
           onClick={() => setPage("leads")}
@@ -117,7 +117,7 @@ const HomePage = () => {
         >
           Clients
         </button>
-      </div>
+      </div>}
 
       <div style={{ display: "flex", alignItems: "center" }}>
         <h1 className="homeTitle"> {userName}</h1>
