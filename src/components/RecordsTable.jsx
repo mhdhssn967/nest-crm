@@ -266,7 +266,7 @@ const RecordsTable = ({ triggerRefresh, admin, currentUser, companyId, allEmploy
                   ? "#e63946" // dark red
                   : record.priority === "Medium"
                   ? "#e9c46a" // dark yellow
-                  : "#2a9d8f", // dark green
+                  : "#2a9d8f",
               borderRadius: "0 6px 6px 0",
             }}
           ></div><p style={{marginLeft:'20px'}}>{index + 1}</p></td>
