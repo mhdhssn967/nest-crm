@@ -103,7 +103,22 @@ export const updateClientRemarks = async (companyId, clientId, remarks) => {
     throw error;
   }
 };
-
+/**
+ * Update the key-value client information
+ * @param {string} companyId - ID of the company
+ * @param {string} clientId - ID of the client document
+ * @param {object} clientInformation - Object containing key-value info to save
+ */
+export const updateClientInformation = async (companyId, clientId, clientInformation) => {
+  try {
+    const clientRef = doc(db, "userData", companyId, "clientsData", clientId);
+    await updateDoc(clientRef, { clientInformation });
+    console.log("Client information updated successfully");
+  } catch (error) {
+    console.error("Error updating client information:", error);
+    throw error;
+  }
+};
 
 /**
  * Delete a client document

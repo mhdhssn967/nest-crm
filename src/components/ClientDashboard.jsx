@@ -50,7 +50,7 @@ const ClientDashboard = ({ clients }) => {
 
   return (
     <div className="p-1">
-      <Row className="mb-4">
+      <Row className="mb-0">
         <Col xs={6} md={3}>
           <Card style={cardStyle}>
             <div style={titleStyle}>Total Clients</div>
@@ -71,7 +71,7 @@ const ClientDashboard = ({ clients }) => {
         </Col>
         <Col xs={6} md={3}>
           <Card style={cardStyle}>
-            <div style={titleStyle}>Total Business Value</div>
+            <div style={titleStyle}>Business Value</div>
             <div style={valueStyle}>{formatRupees(totalBusiness)}</div>
           </Card>
         </Col>

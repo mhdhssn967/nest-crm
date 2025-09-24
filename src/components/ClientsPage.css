@@ -6,17 +6,24 @@
 
 .client-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
 }
 
 .client-name {
-  background-color: #eeeeee; /* your desired color */
+  background-color: #a9daff; /* your desired color */
   padding: 8px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   font-weight: bold;
   font-size: 18px !important;
+  width: inherit;
 }
 .client-detail-main{
     display: flex;
+}
+.clients-lens{
+    background-color: black;
+    padding: 8px;
+    border-radius: 10px 0px 0px 10px;
+    color: rgb(231, 230, 230);
 }

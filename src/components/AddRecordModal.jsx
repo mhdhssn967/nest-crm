@@ -6,6 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import { auth, db } from '../firebaseConfig';
 import { logEvent } from 'firebase/analytics';
 import './AddRecordModal.css'
+import Swal from "sweetalert2";
 
 
 const AddRecordModal = ({triggerRefresh, setTriggerRefresh, companyId, employeeName}) => {
@@ -23,46 +24,86 @@ const AddRecordModal = ({triggerRefresh, setTriggerRefresh, companyId, employeeN
 
 
 
- const handleSubmit=async(e)=>{
-  const {date,clientName,priority,place,country,personOfContact,pocDesignation,contactNo,personOfContact2,contactNo2,referralPerson,email,associate,currentStatus,fPrice,lPrice,lastContacted,nextFollowUp,remarks}=records
+const handleSubmit = async (e) => {
   e.preventDefault();
-    if(!clientName){
-      alert("Enter Required Fields")
-      return;
-        }
-        try{
-          await addDoc(collection(db, "userData",companyId,"CRMdata" ),{
-            date,
-            clientName,
-            priority,
-            place,
-            country,
-            personOfContact,
-            pocDesignation,
-            contactNo,
-            personOfContact2,
-            contactNo2,
-            referralPerson,
-            email,
-            currentStatus,
-            fPrice,
-            lPrice,
-            lastContacted,	
-            nextFollowUp,
-            remarks,
-            employeeName,
-            companyId:companyId,
-            associate: auth.currentUser.uid, // Store BDA who added it
-            createdAt: new Date()
-          })
 
-        }catch(err){
-          console.log(err);
-        }
-  handleClose()
-  setTriggerRefresh(!triggerRefresh)
- }
+  const {
+    date,
+    clientName,
+    priority,
+    place,
+    country,
+    personOfContact,
+    pocDesignation,
+    contactNo,
+    personOfContact2,
+    contactNo2,
+    referralPerson,
+    email,
+    currentStatus,
+    fPrice,
+    lPrice,
+    lastContacted,
+    nextFollowUp,
+    remarks,
+  } = records;
 
+  // ✅ Validation
+  if (!clientName || !contactNo) {
+    Swal.fire({
+      icon: "warning",
+      title: "Missing Fields",
+      text: "Please fill in Client Name and Contact Number.",
+    });
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, "userData", companyId, "CRMdata"), {
+      date,
+      clientName,
+      priority,
+      place,
+      country,
+      personOfContact,
+      pocDesignation,
+      contactNo,
+      personOfContact2,
+      contactNo2,
+      referralPerson,
+      email,
+      currentStatus,
+      fPrice,
+      lPrice,
+      lastContacted,
+      nextFollowUp,
+      remarks,
+      employeeName,
+      companyId,
+      associate: auth.currentUser.uid, // store BDA who added it
+      createdAt: new Date(),
+    });
+
+    // ✅ Success message
+    Swal.fire({
+      icon: "success",
+      title: "Client Added",
+      text: `${clientName} has been added successfully.`,
+      timer: 2000,
+      showConfirmButton: false,
+    });
+
+    handleClose();
+    setTriggerRefresh((prev) => !prev);
+  } catch (err) {
+    console.error("Error adding CRM record:", err);
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Failed to add client. Please try again.",
+    });
+  }
+};
 
     return (
         <>

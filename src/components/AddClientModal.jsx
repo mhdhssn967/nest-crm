@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { Modal, Button, Form, InputGroup, Row, Col } from "react-bootstrap";
 import { addClient } from "../services/clientServices";
 
+  import Swal from "sweetalert2";
+
 const AddClientModal = ({ show, onHide, companyId, services, triggerRefresh, setTriggerRefresh }) => {
   const [form, setForm] = useState({
     name: "",
     service: services && services.length > 0 ? services[0] : "",
-    total: "",
+    total: 0,
     received: [], // array of payments
     notes: "",
     clientInformation: {}, // new field
@@ -53,50 +55,78 @@ const AddClientModal = ({ show, onHide, companyId, services, triggerRefresh, set
     setInfoFields([...infoFields, { field: "", value: "" }]);
   };
 
-  const handleSubmit = async () => {
-    if (!form.name || !form.total) return;
 
-    // build clientInformation object
-    const clientInformation = {};
-    infoFields.forEach((item) => {
-      if (item.field && item.value) {
-        clientInformation[item.field] = item.value;
-      }
+const handleSubmit = async () => {
+  if (!form.name ) {
+    Swal.fire({
+      icon: "warning",
+      title: "Missing Fields",
+      text: "Please client name.",
+    });
+    return;
+  }
+
+  // build clientInformation object
+  const clientInformation = {};
+  infoFields.forEach((item) => {
+    if (item.field && item.value) {
+      clientInformation[item.field] = item.value;
+    }
+  });
+
+  // total received sum
+  const totalReceived = form.received.reduce(
+    (sum, r) => sum + (parseInt(r.amount) || 0),
+    0
+  );
+
+  const pending = Math.max(0, Number(form.total - totalReceived));
+
+  const clientData = {
+    name: form.name,
+    service: form.service,
+    total: parseInt(form.total),
+    received: form.received,
+    pending,
+    notes: form.notes,
+    clientInformation,
+  };
+
+  try {
+    await addClient(companyId, clientData);
+
+    // ✅ Success alert
+    Swal.fire({
+      icon: "success",
+      title: "Client Added",
+      text: `${form.name} has been added successfully.`,
+      timer: 2000,
+      showConfirmButton: false,
     });
 
-    // total received sum
-    const totalReceived = form.received.reduce((sum, r) => sum + r.amount, 0);
+    // reset everything
+    setForm({
+      name: "",
+      service: services && services.length > 0 ? services[0] : "",
+      total: 0,
+      received: [],
+      notes: "",
+      clientInformation: {},
+    });
+    setPayment({ amount: "", note: "" });
+    setInfoFields([{ field: "", value: "" }]);
+    setTriggerRefresh(!triggerRefresh);
+    onHide();
+  } catch (error) {
+    console.error("Error adding client:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Failed to add client. Please try again.",
+    });
+  }
+};
 
-    const clientData = {
-      name: form.name,
-      service: form.service,
-      total: parseInt(form.total),
-      received: form.received,
-      pending: Number(form.total - totalReceived),
-      notes: form.notes,
-      clientInformation, // ✅ save in desired format
-    };
-
-    try {
-      await addClient(companyId, clientData);
-
-      // reset everything
-      setForm({
-        name: "",
-        service: services && services.length > 0 ? services[0] : "",
-        total: "",
-        received: [],
-        notes: "",
-        clientInformation: {},
-      });
-      setPayment({ amount: "", note: "" });
-      setInfoFields([{ field: "", value: "" }]);
-      setTriggerRefresh(!triggerRefresh);
-      onHide();
-    } catch (error) {
-      console.error("Error adding client:", error);
-    }
-  };
 
   return (
     <Modal show={show} onHide={onHide} centered>

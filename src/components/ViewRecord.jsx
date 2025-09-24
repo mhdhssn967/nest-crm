@@ -4,6 +4,7 @@ import close from "../assets/close.png";
 import getBDAName from "../services/fetchNames";
 import { deleteRecord } from "../services/deleteRecords";
 import updateRecord from "../services/editRecord";
+import Swal from "sweetalert2";
 
 const ViewRecord = ({
   setViewRecord,
@@ -26,15 +27,40 @@ const ViewRecord = ({
   }, [viewRecordData]);
 
   const handleDeleteRecord = async (data) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this record?"
-    );
-    if (confirmDelete) {
-      await deleteRecord(data,companyId);
-      setViewRecord(false);
-      setUpdateTable(!updateTable);
+  Swal.fire({
+    title: "Are you sure?",
+    text: "This record will be permanently deleted!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Yes, delete it!",
+    cancelButtonText: "Cancel",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        await deleteRecord(data, companyId);
+        setViewRecord(false);
+        setUpdateTable((prev) => !prev);
+
+        Swal.fire({
+          icon: "success",
+          title: "Deleted!",
+          text: "The record has been deleted successfully.",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      } catch (error) {
+        console.error("Error deleting record:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to delete the record. Please try again.",
+        });
+      }
     }
-  };
+  });
+};
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -45,12 +71,27 @@ const ViewRecord = ({
   };
 
   const handleSave = async () => {
-    console.log("Updated Data:", editedData);
+  try {
     setIsEditing(false);
     await updateRecord(viewRecordData.id, editedData, companyId);
-    setUpdateTable(!updateTable);
-    // You can send `editedData` to your backend API for updating the record
-  };
+    setUpdateTable((prev) => !prev);
+
+    Swal.fire({
+      icon: "success",
+      title: "Saved!",
+      text: "The record has been updated successfully.",
+      timer: 2000,
+      showConfirmButton: false,
+    });
+  } catch (error) {
+    console.error("Error saving record:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Failed to update the record. Please try again.",
+    });
+  }
+};
 
   const handleChange = (e, field) => {
     setEditedData({ ...editedData, [field]: e.target.value });
