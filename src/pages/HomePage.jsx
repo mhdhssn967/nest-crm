@@ -21,6 +21,7 @@ import { Await } from "react-router-dom";
 import Nav from "../components/Nav";
 import ChatAI from "../components/ChatAI";
 import Clientspage from "../components/Clientspage";
+import Workspace from "./Workspace";
 
 const HomePage = () => {
   const [userName, setUserName] = useState("BD Associate");
@@ -104,20 +105,28 @@ const HomePage = () => {
   return (
     <>
       <Nav employeeName={employeeName} />
-      {admin&&<div className="page-switch-btns">
+      <div className="page-switch-btns">
         <button
           className={page === "leads" ? "active" : ""}
           onClick={() => setPage("leads")}
         >
           Leads
         </button>
+        {admin&&
         <button
           className={page === "clients" ? "active" : ""}
           onClick={() => setPage("clients")}
         >
+          
           Clients
+        </button>}
+        <button
+          className={page === "workspace" ? "active" : ""}
+          onClick={() => setPage("workspace")}
+        >
+          Workspace
         </button>
-      </div>}
+      </div>
 
       <div style={{ display: "flex", alignItems: "center" }}>
         <h1 className="homeTitle"> {userName}</h1>
@@ -148,6 +157,8 @@ const HomePage = () => {
         />
       )}
       {page == "clients" && <Clientspage companyId={companyId} />}
+      {page == "workspace" && <Workspace userId={currentUser.uid}
+          companyId={companyId}/>}
     </>
   );
 };
