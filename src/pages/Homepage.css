@@ -9,11 +9,11 @@
 }
 
 .page-switch-btns button {
-  padding: 5px 5px;
+  padding: 5px 15px;
   border: 2px solid #373838;
   background: white;
   color: #252525;
-  border-radius: 6px;
+  border-radius: 60px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;

@@ -22,6 +22,7 @@ import Nav from "../components/Nav";
 import ChatAI from "../components/ChatAI";
 import Clientspage from "../components/Clientspage";
 import Workspace from "./Workspace";
+import DownloadData from "../components/DownloadData";
 
 const HomePage = () => {
   const [userName, setUserName] = useState("BD Associate");
@@ -31,6 +32,9 @@ const HomePage = () => {
   const [employeeName, setEmployeeName] = useState("");
   const [allEmployees, setAllmployees] = useState([]);
   const [admin, setAdmin] = useState(false);
+  
+  console.log(companyId,currentUser,employeeName);
+  
 
   const [page, setPage] = useState("leads");
   console.log(allEmployees);
@@ -141,6 +145,7 @@ const HomePage = () => {
         style={{ display: "flex", justifyContent: "left", alignItems: "start" }}
       >
         {/* <button style={{ margin: '1%' }} className='btn btn-secondary'>View Associates</button> */}
+        <DownloadData companyId={companyId} currentUser={currentUser?currentUser.reloadUserInfo.localId:'0'} employeeName={employeeName}/>
       </div>
 
       {/* { admin==true&&(
@@ -156,6 +161,7 @@ const HomePage = () => {
           companyId={companyId}
         />
       )}
+
       {page == "clients" && <Clientspage companyId={companyId} />}
       {page == "workspace" && <Workspace userId={currentUser.uid}
           companyId={companyId}/>}
