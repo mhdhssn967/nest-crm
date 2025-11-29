@@ -135,3 +135,4 @@ export const deleteClient = async (companyId, clientId) => {
     throw error;
   }
 };
+
