@@ -106,9 +106,12 @@ const HomePage = () => {
     getAllEmployees();
   }, [companyId]);
 
+
+
   return (
     <>
       <Nav employeeName={employeeName} />
+
       <div className="page-switch-btns">
         <button
           className={page === "leads" ? "active" : ""}
@@ -141,12 +144,12 @@ const HomePage = () => {
           employeeName={employeeName}
         />}
       </div>
-      <div
+      {page=='leads'&&<div
         style={{ display: "flex", justifyContent: "left", alignItems: "start" }}
       >
         {/* <button style={{ margin: '1%' }} className='btn btn-secondary'>View Associates</button> */}
         <DownloadData companyId={companyId} currentUser={currentUser?currentUser.reloadUserInfo.localId:'0'} employeeName={employeeName}/>
-      </div>
+      </div>}
 
       {/* { admin==true&&(
       <div style={{margin:'3%'}}><AdminDashboard/></div>

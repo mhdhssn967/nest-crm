@@ -27,3 +27,51 @@
     border-radius: 10px 0px 0px 10px;
     color: rgb(231, 230, 230);
 }
+
+.modern-table {
+  border-radius: 12px;
+  border: 1px solid #e6e6e6 !important;
+  overflow: hidden;
+  font-size: 0.95rem;
+}
+
+.modern-table thead th {
+  background: #fafafa;
+  font-weight: 600;
+  padding: 14px;
+  border-bottom: 2px solid #e0e0e0 !important;
+}
+
+.modern-row {
+  transition: background 0.25s ease, transform 0.1s ease;
+  cursor: pointer;
+}
+
+.modern-row:hover {
+  background: #f5f7ff !important;
+}
+
+.client-name {
+  font-weight: 600;
+  color: #333;
+}
+
+.amount {
+  font-weight: 600;
+}
+
+.amount.total {
+  color: #6a1b9a;
+}
+
+.amount.received {
+  color: #00a152;
+}
+
+.amount.pending {
+  color: #ef6c00;
+}
+
+.amount.pending.zero {
+  color: #9e9e9e;
+}

@@ -1,12 +1,19 @@
 // ClientsPage.jsx
 import React, { useEffect, useState } from "react";
-import { Card, Button, Row, Col, Form } from "react-bootstrap";
+import { Card, Button, Row, Col, Form, Table } from "react-bootstrap";
 import AddClientModal from "./AddClientModal";
 import ClientDetailsModal from "./ClientDetailsModal";
 import { fetchClients, fetchServices } from "../services/clientServices";
 import "./ClientsPage.css";
 import ClientDashboard from "./ClientDashboard";
 
+import {
+  PersonFill,
+  BriefcaseFill,
+  CurrencyRupee,
+  Wallet2,
+  HourglassSplit,
+} from "react-bootstrap-icons";
 const ClientsPage = ({ companyId }) => {
   const [clients, setClients] = useState([]);
   const [services, setServices] = useState([]);
@@ -49,11 +56,12 @@ const ClientsPage = ({ companyId }) => {
   // Filtered clients
   const filteredClients = clients
     .filter((c) =>
-      selectedService === "All" ? true : c.category === selectedService
+      selectedService === "All" ? true : c.service === selectedService
     )
     .filter((c) =>
       c.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
+console.log(filteredClients);
 
   return (
     <div className="p-4">
@@ -94,47 +102,80 @@ const ClientsPage = ({ companyId }) => {
       <ClientDashboard clients={filteredClients} />
       <hr />
 
-      <Row>
-        {filteredClients.length > 0 ? (
-          filteredClients.map((client) => {
-            const totalReceived = client.received
-              ? client.received.reduce((sum, r) => sum + r.amount, 0)
-              : 0;
-            const pending = client.total - totalReceived;
+      <Table bordered hover responsive className="modern-table">
+  <thead>
+    <tr>
+      <th>
+        <PersonFill size={18} style={{ marginRight: 6 }} />
+        Client
+      </th>
+      <th>
+        <BriefcaseFill size={18} style={{ marginRight: 6 }} />
+        Service
+      </th>
+      <th>
+        <CurrencyRupee size={18} style={{ marginRight: 6, color: "#6a1b9a" }} />
+        Total
+      </th>
+      <th>
+        <Wallet2 size={18} style={{ marginRight: 6, color: "#00a152" }} />
+        Received
+      </th>
+      <th>
+        <HourglassSplit
+          size={18}
+          style={{ marginRight: 6, color: "#ef6c00" }}
+        />
+        Pending
+      </th>
+    </tr>
+  </thead>
 
-            return (
-              <Col md={3} key={client.id} className="mb-3">
-                <Card
-                  className="client-card"
-                  onClick={() => setSelectedClient(client)}
-                  style={{ cursor: "pointer" }}
-                >
-                  {/* Name section with full width background */}
-                  <div className="client-name">{client.name}</div>
+  <tbody>
+    {filteredClients.length > 0 ? (
+      filteredClients.map((client) => {
+        const totalReceived = client.received
+          ? client.received.reduce((sum, r) => sum + r.amount, 0)
+          : 0;
 
-                  <Card.Body>
-                    <Card.Text>
-                      <strong>Service:</strong> {client.service} <br />
-                      <strong>Total:</strong> ₹
-                      {client.total.toLocaleString("en-IN")} <br />
-                      <strong>Received:</strong> ₹
-                      {totalReceived.toLocaleString("en-IN")} <br />
-                      {pending !== 0 && (
-                        <>
-                          <strong>Pending:</strong> ₹
-                          {pending.toLocaleString("en-IN")}
-                        </>
-                      )}
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })
-        ) : (
-          <p className="mt-3">No clients found.</p>
-        )}
-      </Row>
+        const pending = client.total - totalReceived;
+
+        return (
+          <tr
+            key={client.id}
+            onClick={() => setSelectedClient(client)}
+            className="modern-row"
+          >
+            <td className="client-name">{client.name}</td>
+            <td>{client.service}</td>
+
+            <td className="amount total">
+              ₹{client.total.toLocaleString("en-IN")}
+            </td>
+
+            <td className="amount received">
+              ₹{totalReceived.toLocaleString("en-IN")}
+            </td>
+
+            <td className={`amount pending ${pending === 0 ? "zero" : ""}`}>
+              {pending !== 0
+                ? `₹${pending.toLocaleString("en-IN")}`
+                : "-"}
+            </td>
+          </tr>
+        );
+      })
+    ) : (
+      <tr>
+        <td colSpan={5} className="text-center py-3">
+          No clients found.
+        </td>
+      </tr>
+    )}
+  </tbody>
+</Table>
+
+
 
       {/* Client Details / Payment History Modal */}
       {selectedClient && (
