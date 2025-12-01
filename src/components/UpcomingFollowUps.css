@@ -36,3 +36,100 @@
     font-size: 12px;
     }
 }
+
+.up-follows-card {
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  margin-top: 10px;
+    max-width: 60%;
+}
+
+.up-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.no-upcoming {
+  color: #777;
+  text-align: center;
+}
+
+.follow-up-list-modern {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  
+}
+
+.follow-up-item-modern {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 10px;
+  background: #f7f9fc;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  transition: 0.2s;
+
+}
+
+.follow-up-item-modern:hover {
+  background: #eef3ff;
+}
+
+.follow-left {
+  display: flex;
+  gap: 20px;
+}
+
+.client-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.emp-name {
+  font-size: 0.85rem;
+  color: #777;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 6px;
+  color: #4A90E2;
+}
+
+.icon-muted {
+  margin-right: 6px;
+  color: #999;
+}
+
+.follow-date {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2d6cdf;
+}
+
+.see-more-btn {
+  margin-top: 10px;
+  width: 100%;
+  border: none;
+  background: #e8efff;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.see-more-btn:hover {
+  background: #d6e3ff;
+}
