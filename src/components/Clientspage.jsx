@@ -105,6 +105,7 @@ console.log(filteredClients);
       <Table bordered hover responsive className="modern-table">
   <thead>
     <tr>
+      <th>#</th>
       <th>
         <PersonFill size={18} style={{ marginRight: 6 }} />
         Client
@@ -133,7 +134,7 @@ console.log(filteredClients);
 
   <tbody>
     {filteredClients.length > 0 ? (
-      filteredClients.map((client) => {
+      filteredClients.map((client,idx) => {
         const totalReceived = client.received
           ? client.received.reduce((sum, r) => sum + r.amount, 0)
           : 0;
@@ -146,6 +147,7 @@ console.log(filteredClients);
             onClick={() => setSelectedClient(client)}
             className="modern-row"
           >
+            <td>{idx+1}</td>
             <td className="client-name">{client.name}</td>
             <td>{client.service}</td>
 

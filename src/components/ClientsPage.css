@@ -45,6 +45,10 @@
 .modern-row {
   transition: background 0.25s ease, transform 0.1s ease;
   cursor: pointer;
+
+}
+.modern-row td{
+  padding: 15px;
 }
 
 .modern-row:hover {
