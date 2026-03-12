@@ -1,0 +1,49 @@
+/* ─── Distributors Page ───────────────────────────────────────────────── */
+
+.distributors-page {
+  padding: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dist-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.dist-title {
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.dist-subtitle {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 2px 0 0;
+}
+
+/* ─── Responsive Hide ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none !important;
+  }
+
+  .distributors-page {
+    padding: 0.75rem;
+  }
+
+  .dist-title {
+    font-size: 1.1rem;
+  }
+}
+
+/* ─── Smooth row hover ────────────────────────────────────────────────── */
+tbody tr {
+  transition: background 0.1s ease;
+}

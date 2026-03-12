@@ -23,6 +23,8 @@ import ChatAI from "../components/ChatAI";
 import Clientspage from "../components/Clientspage";
 import Workspace from "./Workspace";
 import DownloadData from "../components/DownloadData";
+import Distributors from "./Distributors";
+
 
 const HomePage = () => {
   const [userName, setUserName] = useState("BD Associate");
@@ -133,6 +135,12 @@ const HomePage = () => {
         >
           Workspace
         </button>
+        <button
+          className={page === "distributors" ? "active" : ""}
+          onClick={() => setPage("distributors")}
+        >
+          Distributors
+        </button>
       </div>
 
       <div style={{ display: "flex", alignItems: "center" }}>
@@ -168,6 +176,8 @@ const HomePage = () => {
       {page == "clients" && <Clientspage companyId={companyId} />}
       {page == "workspace" && <Workspace userId={currentUser.uid}
           companyId={companyId}/>}
+      {page == "distributors" && <Distributors currentUser={currentUser.uid}
+          companyId={companyId} employeeName={employeeName}/>}
     </>
   );
 };
