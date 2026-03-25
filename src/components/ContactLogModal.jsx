@@ -5,13 +5,7 @@ import { fetchContactLog, addContactLogEntry, updateDistributor } from "../servi
 import { auth } from "../firebaseConfig";
 
 const STATUS_OPTIONS = [
-  "Contacted",
-  "To Follow Up",
-  "Agreement Sent",
-  "Agreement Signed",
-  "Doing Sales",
-  "Inactive",
-  "Terminated",
+  "Haven't yet contacted","Called, no response","Contacted and discussed via phone","Online demo done","Live demo done","Hospital presentation done","Agreement Sent & awaiting response","Agreement Signed","Purchased Demo Piece","Doing Sales","Inactive","Terminated"
 ];
 
 const STATUS_COLORS = {
