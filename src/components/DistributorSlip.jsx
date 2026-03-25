@@ -1,6 +1,8 @@
 import { useState } from "react";
 import ViewDistributorModal from "./ViewDistributorModal";
 import ContactLogModal from "./ContactLogModal";
+import { deleteDistributor } from "../services/fetchDistributors";
+import Swal from "sweetalert2";
 
 const STATUS_COLORS = {
   "Contacted": "#a3c9f1",
@@ -26,11 +28,46 @@ const DistributorSlip = ({ distributor, companyId, isAdmin, onUpdated }) => {
       </span>
     ) : null;
 
+    const handleDelete = async (e) => {
+  e.stopPropagation();
+  
+  const result = await Swal.fire({
+    title: "Delete Distributor?",
+    text: `"${distributor.distributorName}" will be permanently removed. This cannot be undone.`,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#dc2626",
+    cancelButtonColor: "#6b7280",
+    confirmButtonText: "Yes, delete",
+    cancelButtonText: "Cancel",
+  });
+
+  if (!result.isConfirmed) return;
+
+  try {
+    await deleteDistributor(companyId, distributor.id);
+    onUpdated();
+    Swal.fire({
+      title: "Deleted",
+      text: `"${distributor.distributorName}" has been removed.`,
+      icon: "success",
+      timer: 1800,
+      showConfirmButton: false,
+    });
+  } catch (err) {
+    Swal.fire({
+      title: "Error",
+      text: "Failed to delete distributor. Please try again.",
+      icon: "error",
+    });
+  }
+};
+
   return (
     <>
       <div
         className={`dist-slip ${expanded ? "dist-slip--expanded" : ""}`}
-        style={{ borderLeft: `4px solid ${statusColor}` }}
+        style={{ borderLeft: `4px solid ${statusColor}`,marginBottom:'10px' }}
       >
         {/* ── Collapsed row (always visible) ── */}
         <div
@@ -40,7 +77,7 @@ const DistributorSlip = ({ distributor, companyId, isAdmin, onUpdated }) => {
           tabIndex={0}
           onKeyDown={(e) => e.key === "Enter" && setExpanded((p) => !p)}
         >
-          <div className="dist-slip__title-row">
+          <div className="dist-slip__title-row" >
             <span className="dist-slip__name">{distributor.distributorName}</span>
             <span
               className="dist-slip__status"
@@ -146,6 +183,12 @@ const DistributorSlip = ({ distributor, companyId, isAdmin, onUpdated }) => {
               >
                 <i className="fa-solid fa-timeline me-1"></i> Contact History
               </button>
+              <button
+  className="dist-slip__btn dist-slip " style={{backgroundColor:'rgb(252, 200, 200)',border:'solid red 1px'}}
+  onClick={handleDelete}
+>
+  <i className="fa-solid fa-trash me-1"></i> Delete Distributor
+</button>
             </div>
           </div>
         )}

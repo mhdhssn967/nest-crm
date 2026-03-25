@@ -468,7 +468,8 @@ const StateCard = ({ state, regionMap, companyId, isAdminUser, onUpdated, index 
           padding: "0 1.1rem 1.1rem",
           borderTop: `1px solid ${accent}18`,
         }}>
-          <div style={{ paddingTop: "0.85rem" }}>
+          <div style={{ paddingTop: "0.85rem",
+           }}>
             {regionEntries.map(([region, dists], i) => (
               <RegionRow
                 key={region}

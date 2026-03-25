@@ -1,4 +1,4 @@
-import { collection, query, where, getDocs, addDoc, updateDoc, doc, orderBy } from "firebase/firestore";
+import { collection, query, where, getDocs, addDoc, updateDoc, doc, orderBy, deleteDoc } from "firebase/firestore";
 import { db, auth } from "../firebaseConfig";
 import { isAdmin } from "./fetchNames";
 
@@ -118,6 +118,17 @@ export const addContactLogEntry = async (companyId, distributorId, entry) => {
   }
 };
 
+// Delete distributor
+export const deleteDistributor = async (companyId, distributorId) => {
+  try {
+    const ref = doc(db, "userData", companyId, "distributors", distributorId);
+    await deleteDoc(ref);
+    return true;
+  } catch (err) {
+    console.error("Error deleting distributor:", err);
+    throw err;
+  }
+};
 // ─────────────────────────────────────────────────────────────────────────────
 // FIRESTORE INDEX NOTE:
 // The non-admin query on contactLog uses a composite index:
