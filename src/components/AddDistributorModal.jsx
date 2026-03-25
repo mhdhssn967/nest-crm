@@ -168,9 +168,14 @@ const AddDistributorModal = ({ companyId, employeeName, onAdded }) => {
                 <Form.Group className="mb-3">
                   <Form.Label>Current Status</Form.Label>
                   <Form.Select onChange={f("currentStatus")} value={form.currentStatus}>
+                    <option value="Haven't yet contacted">Haven't yet contacted</option>
+                    <option value="Called, no response">Called, no response</option>
                     <option value="Contacted">Contacted</option>
+                    <option value="Online demo done">Online demo done</option>
+                    <option value="Live demo done">Live demo done</option>
+                    <option value="Hospital presentation done">Live demo done</option>
                     <option value="To Follow Up">To Follow Up</option>
-                    <option value="Agreement Sent">Agreement Sent</option>
+                    <option value="Agreement Sent & awaiting response">Agreement Sent & waiting</option>
                     <option value="Agreement Signed">Agreement Signed</option>
                     <option value="Doing Sales">Doing Sales</option>
                     <option value="Inactive">Inactive</option>
