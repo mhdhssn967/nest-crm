@@ -18,10 +18,7 @@ const STATUS_COLORS = {
 };
 
 const STATUS_LIST = [
-  "Haven't yet contacted","Called, no response","Contacted","Online demo done",
-  "Live demo done","Hospital presentation done","To Follow Up",
-  "Agreement Sent & awaiting response","Agreement Signed","Doing Sales",
-  "Inactive","Terminated",
+  "Haven't yet contacted","Called, no response","Contacted and discussed via phone","Online demo done","Live demo done","Hospital presentation done","Agreement Sent & awaiting response","Agreement Signed","Purchased Demo Piece","Doing Sales","Inactive","Terminated",
 ];
 
 const REGION_ICONS = {
@@ -49,7 +46,7 @@ const groupByRegion = (records) => {
 
 const StatCard = ({ icon, label, value, sub, color }) => (
   <div style={{
-    background: "#fff", borderRadius: 14, padding: "1.1rem 1.3rem",
+    background: "#fff", padding: "1.1rem 1.3rem",
     boxShadow: "0 1px 6px rgba(0,0,0,0.07)", borderLeft: `4px solid ${color}`,
     display: "flex", alignItems: "center", gap: 14, minWidth: 0,
   }}>
