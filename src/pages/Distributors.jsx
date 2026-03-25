@@ -5,7 +5,7 @@ import AddDistributorModal from "../components/AddDistributorModal";
 import DistributorSlip from "../components/DistributorSlip";
 import OQ from "../assets/OQ.png";
 import "./Distributors.css";
-import importAll from "../services/tempScript";
+// import importAll from "../services/tempScript";
 
 const STATUS_COLORS = {
   "Contacted": "#a3c9f1",
