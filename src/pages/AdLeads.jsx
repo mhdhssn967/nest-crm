@@ -434,7 +434,9 @@ const AdLeads = ({ companyId, currentUser }) => {
   useEffect(() => {
     const load = async () => {
       setLoading(true);
-      const adminStatus = await isAdmin(currentUser?.uid);
+      const adminStatus = await isAdmin(currentUser);
+      console.log(adminStatus);
+      
       setCheckAdmin(adminStatus);
       const data = await fetchAdLeads(companyId, currentUser, adminStatus);
       setLeads(data);

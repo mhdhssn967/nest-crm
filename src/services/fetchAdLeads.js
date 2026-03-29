@@ -16,11 +16,16 @@ import { db } from "../firebaseConfig";
 export const fetchAdLeads = async (companyId, currentUser, adminStatus) => {
   try {
     const ref = collection(db, "userData", companyId, "adLeads");
-    const uid = currentUser?.uid;
+    const uid = currentUser;
+
+    if (!adminStatus && !uid) {
+      console.warn("UID not available yet");
+      return [];
+    }
 
     const q = adminStatus
       ? query(ref, orderBy("createdAt", "desc"))
-      : query(ref, where("assignedToUid", "==", uid), orderBy("createdAt", "desc"));
+      : query(ref, where("assignedToUid", "==", uid), orderBy("updatedAt", "desc"));
 
     const snap = await getDocs(q);
     return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
@@ -29,7 +34,6 @@ export const fetchAdLeads = async (companyId, currentUser, adminStatus) => {
     return [];
   }
 };
-
 // ─── Add a new lead (+ first timeline entry) ────────────────────────────────
 export const addLead = async (companyId, data, authorName) => {
   try {
