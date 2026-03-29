@@ -24,7 +24,7 @@ import Clientspage from "../components/Clientspage";
 import Workspace from "./Workspace";
 import DownloadData from "../components/DownloadData";
 import Distributors from "./Distributors";
-
+import AdLeads from "./AdLeads";
 
 const HomePage = () => {
   const [userName, setUserName] = useState("BD Associate");
@@ -114,33 +114,41 @@ const HomePage = () => {
     <>
       <Nav employeeName={employeeName} />
 
-      <div className="page-switch-btns">
-        <button
-          className={page === "leads" ? "active" : ""}
-          onClick={() => setPage("leads")}
-        >
-          Leads
-        </button>
-        {admin&&
-        <button
-          className={page === "clients" ? "active" : ""}
-          onClick={() => setPage("clients")}
-        >
-          
-          Clients
-        </button>}
-        <button
-          className={page === "workspace" ? "active" : ""}
-          onClick={() => setPage("workspace")}
-        >
-          Workspace
-        </button>
-        <button
-          className={page === "distributors" ? "active" : ""}
-          onClick={() => setPage("distributors")}
-        >
-          Distributors
-        </button>
+      <div style={{width:'100vw',overflowX:'scroll'}}>
+        <div className="page-switch-btns">
+          <button
+            className={page === "leads" ? "active" : ""}
+            onClick={() => setPage("leads")}
+          >
+            Leads
+          </button>
+          {admin&&
+          <button
+            className={page === "clients" ? "active" : ""}
+            onClick={() => setPage("clients")}
+          >
+            
+            Clients
+          </button>}
+          <button
+            className={page === "workspace" ? "active" : ""}
+            onClick={() => setPage("workspace")}
+          >
+            Workspace
+          </button>
+          <button
+            className={page === "distributors" ? "active" : ""}
+            onClick={() => setPage("distributors")}
+          >
+            Distributors
+          </button>
+          <button
+            className={page === "adleads" ? "active" : ""}
+            onClick={() => setPage("adleads")}
+          >
+            Ad Leads
+          </button>
+        </div>
       </div>
 
       <div style={{ display: "flex", alignItems: "center" }}>
@@ -177,6 +185,8 @@ const HomePage = () => {
       {page == "workspace" && <Workspace userId={currentUser.uid}
           companyId={companyId}/>}
       {page == "distributors" && <Distributors currentUser={currentUser.uid}
+          companyId={companyId} employeeName={employeeName}/>}
+          {page == "adleads" && <AdLeads currentUser={currentUser.uid}
           companyId={companyId} employeeName={employeeName}/>}
     </>
   );

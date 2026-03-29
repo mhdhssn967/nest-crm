@@ -106,3 +106,27 @@ export const isAdmin=async(userId)=>{
 
 // fetch employees
 
+export const fetchAllEmployees = async (companyId) => {
+  try {
+    const employeesRef = collection(db, 'userData', companyId, 'employees');
+    const snapshot = await getDocs(employeesRef);
+
+    if (snapshot.empty) {
+      return []; // No employee records
+    }
+
+    const employees = snapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        uid: data.uid, 
+        empName: data.empName || '',
+      };
+    });
+
+    return employees;
+
+  } catch (error) {
+    console.error('Error fetching employees:', error);
+    return [];
+  }
+};
