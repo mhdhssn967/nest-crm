@@ -6,6 +6,7 @@ import {
   fetchStatusHistory,
   updateLeadStatus,
   updateLeadRemarks,
+  updateNewLeads,                          // ← NEW IMPORT
 } from "../services/fetchAdLeads";
 import { isAdmin } from "../services/fetchNames";
 import AddLeadModal from "../components/AddLeadModal";
@@ -140,6 +141,10 @@ const UpdateStatusPanel = ({ lead, companyId, currentUser, onUpdated }) => {
         currentUser?.displayName || "Unknown",
         followUp || null
       );
+      // ── Clear newLead flag on first sales interaction ──
+      if (lead.newLead) {
+        await updateNewLeads(companyId, lead.id, false);
+      }
       setNote("");
       onUpdated(lead.id);
       Swal.fire({ icon: "success", title: "Status Updated", timer: 1300, showConfirmButton: false });
@@ -232,16 +237,15 @@ const LeadRow = ({ lead, companyId, currentUser, checkAdmin, onUpdated }) => {
     }
     setSavingR(false);
   };
+
   const [copied, setCopied] = useState(false);
 
-const handleCopy = (e, text) => {
-  e.stopPropagation(); // Prevents triggering parent click events
-  navigator.clipboard.writeText(text);
-  
-  setCopied(true);
-  // Hide the feedback after 2 seconds
-  setTimeout(() => setCopied(false), 2000);
-};
+  const handleCopy = (e, text) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <div className={`lead-row ${isConverted ? "lead-converted" : ""} ${isNotInterested ? "lead-lost" : ""} ${overdue ? "lead-overdue" : ""}`}>
@@ -265,6 +269,25 @@ const handleCopy = (e, text) => {
               )}
             </div>
             <div className="lead-row-badges">
+              {/* ── NEW LEAD BADGE ── */}
+              {lead.newLead && (
+  <span style={{
+    background: "linear-gradient(135deg, #059669, #10b981)",
+    color: "#fff",
+    borderRadius: 12,
+    padding: "3px 10px",
+    fontSize: "0.72rem",
+    fontWeight: 700,
+    whiteSpace: "nowrap",
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 5,
+    boxShadow: "0 0 0 3px #6ee7b740",
+    animation: "newLeadPulse 1.8s ease-in-out infinite",
+  }}>
+    <i className="fa-solid fa-bolt" style={{ fontSize: "0.65rem" }}></i> New
+  </span>
+)}
               <span className="lead-type-badge" style={{ background: tc + "18", color: tc, border: `1px solid ${tc}30` }}>
                 {lead.leadType}
               </span>
@@ -283,7 +306,6 @@ const handleCopy = (e, text) => {
                 {lead.region}
               </span>
             )}
-            {/* Assigned to (shown to admin only) */}
             {checkAdmin && lead.assignedToName && (
               <span className="lead-meta-item" style={{ color: "#7c3aed", fontWeight: 600 }}>
                 <i className="fa-solid fa-user-tie"></i>
@@ -291,50 +313,46 @@ const handleCopy = (e, text) => {
               </span>
             )}
             {lead.contactNumber && (
-  <span className="lead-meta-item" onClick={(e) => e.stopPropagation()} style={{ display: "flex", gap: 4, alignItems: "center", position: "relative" }}>
-    <a href={`tel:${phone}`} className="lead-action-btn call-btn" title="Call">
-      <i className="fa-solid fa-phone"></i>
-    </a>
-    <a href={`https://wa.me/${phone}`} target="_blank" rel="noreferrer"
-      className="lead-action-btn whatsapp-btn" title="WhatsApp">
-      <i className="fa-brands fa-whatsapp"></i>
-    </a>
-    
-    {/* Clickable phone number wrapper */}
-    <span 
-      onClick={(e) => handleCopy(e, lead.contactNumber)}
-      style={{ 
-        color: "#9ca3af", 
-        fontSize: "0.78rem", 
-        cursor: "pointer",
-        display: "flex",
-        alignItems: "center",
-        gap: "4px"
-      }}
-      title="Click to copy"
-    >
-      {lead.contactNumber}
-      <i className="fa-regular fa-copy" style={{ fontSize: '0.7rem' }}></i>
-    </span>
-
-    {/* Feedback Tooltip */}
-    {copied && (
-      <span style={{
-        position: "absolute",
-        top: "-25px",
-        right: "0",
-        backgroundColor: "#10b981", // Green
-        color: "white",
-        padding: "2px 6px",
-        borderRadius: "4px",
-        fontSize: "0.65rem",
-        animation: "fadeIn 0.2s"
-      }}>
-        Copied!
-      </span>
-    )}
-  </span>
-)}
+              <span className="lead-meta-item" onClick={(e) => e.stopPropagation()} style={{ display: "flex", gap: 4, alignItems: "center", position: "relative" }}>
+                <a href={`tel:${phone}`} className="lead-action-btn call-btn" title="Call">
+                  <i className="fa-solid fa-phone"></i>
+                </a>
+                <a href={`https://wa.me/${phone}`} target="_blank" rel="noreferrer"
+                  className="lead-action-btn whatsapp-btn" title="WhatsApp">
+                  <i className="fa-brands fa-whatsapp"></i>
+                </a>
+                <span
+                  onClick={(e) => handleCopy(e, lead.contactNumber)}
+                  style={{
+                    color: "#9ca3af",
+                    fontSize: "0.78rem",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "4px"
+                  }}
+                  title="Click to copy"
+                >
+                  {lead.contactNumber}
+                  <i className="fa-regular fa-copy" style={{ fontSize: '0.7rem' }}></i>
+                </span>
+                {copied && (
+                  <span style={{
+                    position: "absolute",
+                    top: "-25px",
+                    right: "0",
+                    backgroundColor: "#10b981",
+                    color: "white",
+                    padding: "2px 6px",
+                    borderRadius: "4px",
+                    fontSize: "0.65rem",
+                    animation: "fadeIn 0.2s"
+                  }}>
+                    Copied!
+                  </span>
+                )}
+              </span>
+            )}
             {lead.followUpDate && (
               <span className={`lead-meta-item ${overdue ? "overdue-tag" : ""}`}>
                 <i className="fa-regular fa-calendar"></i>
@@ -479,7 +497,6 @@ const AdLeads = ({ companyId, currentUser }) => {
       setLoading(true);
       const adminStatus = await isAdmin(currentUser);
       console.log(adminStatus);
-      
       setCheckAdmin(adminStatus);
       const data = await fetchAdLeads(companyId, currentUser, adminStatus);
       setLeads(data);
@@ -490,7 +507,6 @@ const AdLeads = ({ companyId, currentUser }) => {
 
   const triggerRefresh = () => setRefresh((p) => !p);
 
-  // Region options derived purely from actual lead data — no fixed list
   const allRegions = useMemo(() =>
     [...new Set(leads.map((l) => l.region).filter(Boolean))].sort(),
     [leads]
@@ -567,7 +583,6 @@ const AdLeads = ({ companyId, currentUser }) => {
         </div>
 
         <div className="leads-filter-row">
-          {/* Region — only shows regions actually present in the data */}
           {allRegions.length > 0 && (
             <Form.Select size="sm" className="lead-filter-select" value={filterRegion} onChange={(e) => setFilterRegion(e.target.value)}>
               <option value="all">All Regions</option>

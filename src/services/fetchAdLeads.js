@@ -45,6 +45,7 @@ export const addLead = async (companyId, data, authorName) => {
       createdAt: now,
       updatedAt: now,
       addedByName: authorName,
+      newLead:true,
     });
 
     // Auto first timeline entry
@@ -101,6 +102,17 @@ export const updateLeadRemarks = async (companyId, leadId, remarks) => {
     await updateDoc(ref, { remarks, updatedAt: new Date() });
   } catch (err) {
     console.error("updateLeadRemarks error:", err);
+    throw err;
+  }
+};
+
+// ─── Update remarks ─────────────────────────────────────────────────────────
+export const updateNewLeads = async (companyId, leadId, newLead=false) => {
+  try {
+    const ref = doc(db, "userData", companyId, "adLeads", leadId);
+    await updateDoc(ref, { newLead });
+  } catch (err) {
+    console.error("updateNewLeads error:", err);
     throw err;
   }
 };

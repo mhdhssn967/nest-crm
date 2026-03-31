@@ -413,3 +413,7 @@
   .lead-row-badges { margin-top: 4px; }
   .leads-stats-bar { overflow-x: auto; flex-wrap: nowrap; }
 }
+@keyframes newLeadPulse {
+  0%, 100% { box-shadow: 0 0 0 3px #6ee7b740; }
+  50%       { box-shadow: 0 0 0 6px #6ee7b720; }
+}
