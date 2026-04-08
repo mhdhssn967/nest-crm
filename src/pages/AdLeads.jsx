@@ -11,8 +11,9 @@ import {
 import { isAdmin } from "../services/fetchNames";
 import AddLeadModal from "../components/AddLeadModal";
 import "./AdLeads.css";
-
-// ─── Constants ────────────────────────────────────────────────────────────────
+import { addDistributor } from "../services/fetchDistributors";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../firebaseConfig";
 
 const STATUSES = [
   "New", "Contacted", "Meeting Scheduled", "Demo Done",
@@ -177,12 +178,14 @@ const UpdateStatusPanel = ({ lead, companyId, currentUser, onUpdated }) => {
           />
         </div>
         <div className="col-12">
-          <button className="lead-save-btn" onClick={handleSave} disabled={saving}>
+          <button style={{backgroundColor:'green',color:'white',fontSize:'12px'}} className="btn" onClick={handleSave} disabled={saving}>
             {saving
               ? <Spinner size="sm" />
-              : <><i className="fa-solid fa-floppy-disk me-1"></i>Save Update</>
+              : <><i className="fa-solid fa-floppy-disk me-1"></i> Save Update</>
             }
           </button>
+
+       
         </div>
       </div>
     </div>
@@ -247,6 +250,79 @@ const LeadRow = ({ lead, companyId, currentUser, checkAdmin, onUpdated }) => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+const handleTransferToCRM = async (employee) => {
+  console.log(employee);
+  
+  const isDistributor = lead.leadType === "Distributor";
+  const destination = isDistributor ? "Distributor" : "CRM";
+
+  // 1. Confirm with the user
+  const confirm = await Swal.fire({
+    title: `Transfer to ${destination}?`,
+    text: `Move ${lead.name} to your ${destination} database?`,
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonText: "Yes, Transfer",
+    confirmButtonColor: isDistributor ? "#4361ee" : "rgb(211, 93, 93)"
+  });
+
+  if (!confirm.isConfirmed) return;
+
+  try {
+    const today = new Date().toISOString().split('T')[0];
+
+    if (isDistributor) {
+      // Logic for Distributors collection
+      await addDistributor(companyId, {
+        distributorName: lead.name,
+        contactNumber: lead.contactNumber || "",
+        state: lead.region || "",
+        email: lead.email || "",
+        remarks: lead.remarks || lead.message || ""
+      });
+    } else {
+      // Logic for CRMdata collection (Matching your AddRecordModal structure)
+      const crmRef = collection(db, "userData", companyId, "CRMdata");
+      await addDoc(crmRef, {
+        date: today,
+        clientName: lead.name,
+        priority: lead.priorityLabel || "Medium", // Fallback priority
+        place: lead.region || "",
+        country: "India", // Or lead.country if available
+        personOfContact: lead.name,
+        pocDesignation: "",
+        contactNo: lead.contactNumber || "",
+        email: lead.email || "",
+        currentStatus: "New Lead",
+        remarks: lead.remarks || lead.message || "Transferred from Leads",
+        employeeName: employee,
+        companyId: currentUser,
+        associate: currentUser.uid, 
+        createdAt: new Date(),
+      });
+    }
+
+    // 2. Success Alert
+    Swal.fire({
+      icon: "success",
+      title: "Successfully Transferred",
+      text: `${lead.name} is now in ${destination}.`,
+      timer: 2000,
+      showConfirmButton: false,
+    });
+
+    // 3. Trigger Refresh and Update UI
+    if (onUpdated) onUpdated(lead.id);
+    
+  } catch (err) {
+    console.error("Transfer Error:", err);
+    Swal.fire({
+      icon: "error",
+      title: "Transfer Failed",
+      text: "An error occurred while saving to the database."
+    });
+  }
+};
   return (
     <div className={`lead-row ${isConverted ? "lead-converted" : ""} ${isNotInterested ? "lead-lost" : ""} ${overdue ? "lead-overdue" : ""}`}>
 
@@ -406,6 +482,26 @@ const LeadRow = ({ lead, companyId, currentUser, checkAdmin, onUpdated }) => {
             }
           </div>
 
+          {/* Add to CRM */}
+{/* Add to CRM */}
+{!isConverted && (
+<button 
+  className="btn" 
+  onClick={()=>handleTransferToCRM(lead.assignedToName)}
+  style={{
+    backgroundColor: 'rgb(211, 93, 93)',
+    color: 'white',
+    fontSize: '12px',
+    marginBottom: '10px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px'
+  }}
+>
+  Add to {lead.leadType === "Distributor" ? "Distributor" : "Client"} 
+  <i className="fa-solid fa-chevron-right"></i>
+</button>
+)}
           {/* Status update */}
           <UpdateStatusPanel
             lead={lead}
@@ -413,6 +509,8 @@ const LeadRow = ({ lead, companyId, currentUser, checkAdmin, onUpdated }) => {
             currentUser={currentUser}
             onUpdated={(id) => { handleRefreshHistory(); onUpdated(id); }}
           />
+
+          
 
           {/* Timeline */}
           <div className="lead-detail-block">
@@ -434,6 +532,7 @@ const LeadRow = ({ lead, companyId, currentUser, checkAdmin, onUpdated }) => {
             {lead.assignedToName && ` · Assigned to ${lead.assignedToName}`}
             {" · "}{formatDateTime(lead.createdAt)}
           </div>
+             
         </div>
       )}
     </div>
