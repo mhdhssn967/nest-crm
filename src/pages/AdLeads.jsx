@@ -14,6 +14,7 @@ import "./AdLeads.css";
 import { addDistributor } from "../services/fetchDistributors";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import * as XLSX from "xlsx";
 
 const STATUSES = [
   "New", "Contacted", "Meeting Scheduled", "Demo Done",
@@ -636,6 +637,36 @@ const AdLeads = ({ companyId, currentUser }) => {
   const hasFilters = search || filterRegion !== "all" || filterType !== "all" || filterPriority !== "all" || filterStatus !== "all";
   const clearFilters = () => { setSearch(""); setFilterRegion("all"); setFilterType("all"); setFilterPriority("all"); setFilterStatus("all"); };
 
+  const exportAdLeadsToExcel = () => {
+    if (!filtered || filtered.length === 0) {
+      alert("No ad leads available to export.");
+      return;
+    }
+
+    const exportRows = filtered.map((lead) => ({
+      "Name": lead.name || "",
+      "Institution Name": lead.institutionName || "",
+      "Region": lead.region || "",
+      "Lead Type": lead.leadType || "",
+      "Status": lead.currentStatus || "",
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(exportRows);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "AdLeads");
+
+    const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+    const blob = new Blob([excelBuffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `AdLeads_Export_${new Date().toISOString().slice(0, 10)}.xlsx`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   if (loading)
     return (
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: 200 }}>
@@ -658,7 +689,24 @@ const AdLeads = ({ companyId, currentUser }) => {
               : `Showing leads assigned to you`}
           </p>
         </div>
-        <AddLeadModal companyId={companyId} currentUser={currentUser} onAdded={triggerRefresh} />
+        <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+          <button
+            onClick={exportAdLeadsToExcel}
+            style={{
+              backgroundColor: "#111827",
+              color: "#ffffff",
+              border: "none",
+              borderRadius: 10,
+              padding: "8px 14px",
+              fontSize: "0.85rem",
+              fontWeight: 700,
+              cursor: "pointer",
+            }}
+          >
+            Download Ad Leads
+          </button>
+          <AddLeadModal companyId={companyId} currentUser={currentUser} onAdded={triggerRefresh} />
+        </div>
       </div>
 
       {/* Stats */}
