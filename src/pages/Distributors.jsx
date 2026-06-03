@@ -523,21 +523,23 @@ const Distributors = ({ currentUser, companyId, employeeName }) => {
   const filtered = useMemo(() => {
     const today = new Date();
     const nextWeek = new Date(); nextWeek.setDate(today.getDate() + 7);
+    const clean = (val) => String(val || "").toLowerCase().replace(/[\s\-_()]/g, "");
+
     return records.filter(r => {
       if (search.trim()) {
-        const q = search.toLowerCase();
+        const q = clean(search);
         const hit =
-          r.distributorName?.toLowerCase().includes(q) ||
-          r.state?.toLowerCase().includes(q) ||
-          r.contactPersonName?.toLowerCase().includes(q) ||
-          r.addedByName?.toLowerCase().includes(q) ||
-          r.region?.toLowerCase().includes(q) ||
-          r.contactNumber?.toLowerCase().includes(q) ||
-          r.email?.toLowerCase().includes(q) ||
-          r.address?.toLowerCase().includes(q) ||
-          r.productLinesHandled?.toLowerCase().includes(q) ||
-          r.territoryDescription?.toLowerCase().includes(q) ||
-          r.remarks?.toLowerCase().includes(q);
+          clean(r.distributorName).includes(q) ||
+          clean(r.state).includes(q) ||
+          clean(r.contactPersonName).includes(q) ||
+          clean(r.addedByName).includes(q) ||
+          clean(r.region).includes(q) ||
+          clean(r.contactNumber).includes(q) ||
+          clean(r.email).includes(q) ||
+          clean(r.address).includes(q) ||
+          clean(r.productLinesHandled).includes(q) ||
+          clean(r.territoryDescription).includes(q) ||
+          clean(r.remarks).includes(q);
         if (!hit) return false;
       }
       if (filters.region !== "All" && (r.region?.trim() || "Unknown") !== filters.region) return false;

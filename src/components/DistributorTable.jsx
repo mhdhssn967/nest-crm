@@ -112,7 +112,9 @@ const DistributorTable = ({ records, companyId, isAdmin, onUpdated, selectedStat
     })
     .filter((r) => {
       if (!search) return true;
-      return Object.values(r).some((v) => String(v).toLowerCase().includes(search.toLowerCase()));
+      const clean = (val) => String(val || "").toLowerCase().replace(/[\s\-_()]/g, "");
+      const q = clean(search);
+      return Object.values(r).some((v) => clean(v).includes(q));
     });
 
   return (
