@@ -508,7 +508,8 @@ const Distributors = ({ currentUser, companyId, employeeName }) => {
     const load = async () => {
       if (!currentUser || !companyId) return;
       setLoading(true);
-      const adminStatus = await isAdmin(currentUser.uid);
+      const uid = currentUser?.uid ?? currentUser;
+      const adminStatus = await isAdmin(uid);
       setCheckAdmin(adminStatus);
       const data = await fetchDistributors(companyId, currentUser);
       setRecords(data);
@@ -529,7 +530,14 @@ const Distributors = ({ currentUser, companyId, employeeName }) => {
           r.distributorName?.toLowerCase().includes(q) ||
           r.state?.toLowerCase().includes(q) ||
           r.contactPersonName?.toLowerCase().includes(q) ||
-          r.addedByName?.toLowerCase().includes(q);
+          r.addedByName?.toLowerCase().includes(q) ||
+          r.region?.toLowerCase().includes(q) ||
+          r.contactNumber?.toLowerCase().includes(q) ||
+          r.email?.toLowerCase().includes(q) ||
+          r.address?.toLowerCase().includes(q) ||
+          r.productLinesHandled?.toLowerCase().includes(q) ||
+          r.territoryDescription?.toLowerCase().includes(q) ||
+          r.remarks?.toLowerCase().includes(q);
         if (!hit) return false;
       }
       if (filters.region !== "All" && (r.region?.trim() || "Unknown") !== filters.region) return false;
